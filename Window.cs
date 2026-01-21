@@ -29,6 +29,7 @@ namespace AutoClicker
 		int _startStopKey;
 		State _windowState;
 		Button[] _timeFrames;
+		int _ogWidth;
 
 		public Window()
 		{
@@ -36,6 +37,7 @@ namespace AutoClicker
 			
 			_startStopKey = (short)Keys.RShiftKey;
 			_windowState = State.HideExtended;
+			_ogWidth = Width;
 			_timeFrames = new Button[3]
 			{
 				btn30sec,
@@ -259,11 +261,9 @@ namespace AutoClicker
 		/// </summary>
 		void ChangeWindow()
 		{
-			AutoSize = true;
 			if (_windowState == State.HideExtended)
 			{
-				//Width = pnlInteractClicker.Width + btnChangeWindowState.Width * 2;
-				tlpWindow.ColumnStyles.Clear();
+				Width = pnlInteractClicker.Width + btnChangeWindowState.Width * 2;
 				pnlStandardTimeFrame.Visible = false;
 				pnlTimeCalculator.Visible = false;
 				btnChangeWindowState.Text = ">>";
@@ -272,7 +272,7 @@ namespace AutoClicker
 			{
 				pnlStandardTimeFrame.Visible = true;
 				pnlTimeCalculator.Visible = true;
-				//Width = 470;
+				Width = _ogWidth;
 				btnChangeWindowState.Text = "<<";
 			}
 		}
