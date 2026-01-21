@@ -50,6 +50,9 @@
 			nudInputTime = new NumericUpDown();
 			lblCalculate = new Label();
 			cbTimeUnit = new ComboBox();
+			tcWindow = new TabControl();
+			tpMain = new TabPage();
+			tpSettings = new TabPage();
 			((System.ComponentModel.ISupportInitialize)nudInterval).BeginInit();
 			pnlUserTimeFrame.SuspendLayout();
 			pnlInteractClicker.SuspendLayout();
@@ -57,6 +60,8 @@
 			pnlStandardTimeFrame.SuspendLayout();
 			pnlTimeCalculator.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)nudInputTime).BeginInit();
+			tcWindow.SuspendLayout();
+			tpMain.SuspendLayout();
 			SuspendLayout();
 			// 
 			// btnStartStop
@@ -65,7 +70,7 @@
 			btnStartStop.AutoSize = true;
 			btnStartStop.Cursor = Cursors.Hand;
 			btnStartStop.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-			btnStartStop.Location = new Point(52, 8);
+			btnStartStop.Location = new Point(49, 3);
 			btnStartStop.Margin = new Padding(4, 3, 4, 3);
 			btnStartStop.Name = "btnStartStop";
 			btnStartStop.Size = new Size(163, 28);
@@ -79,7 +84,7 @@
 			lblInterval.Anchor = AnchorStyles.None;
 			lblInterval.AutoSize = true;
 			lblInterval.Font = new Font("Bahnschrift", 11F);
-			lblInterval.Location = new Point(19, 31);
+			lblInterval.Location = new Point(16, 27);
 			lblInterval.Margin = new Padding(4, 0, 4, 0);
 			lblInterval.Name = "lblInterval";
 			lblInterval.Size = new Size(97, 18);
@@ -95,7 +100,7 @@
 			nudInterval.Anchor = AnchorStyles.None;
 			nudInterval.AutoSize = true;
 			nudInterval.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-			nudInterval.Location = new Point(129, 27);
+			nudInterval.Location = new Point(126, 23);
 			nudInterval.Margin = new Padding(4, 3, 4, 3);
 			nudInterval.Maximum = new decimal(new int[] { 2400000, 0, 0, 0 });
 			nudInterval.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
@@ -118,7 +123,7 @@
 			lblHint.AutoSize = true;
 			lblHint.Font = new Font("Bahnschrift", 11F);
 			lblHint.ForeColor = SystemColors.ControlDarkDark;
-			lblHint.Location = new Point(30, 39);
+			lblHint.Location = new Point(27, 34);
 			lblHint.Margin = new Padding(4, 0, 4, 0);
 			lblHint.Name = "lblHint";
 			lblHint.Size = new Size(209, 18);
@@ -134,7 +139,7 @@
 			pnlUserTimeFrame.Location = new Point(5, 4);
 			pnlUserTimeFrame.Margin = new Padding(4, 3, 4, 3);
 			pnlUserTimeFrame.Name = "pnlUserTimeFrame";
-			pnlUserTimeFrame.Size = new Size(266, 63);
+			pnlUserTimeFrame.Size = new Size(261, 54);
 			pnlUserTimeFrame.TabIndex = 4;
 			// 
 			// lblUserTimeFrame
@@ -142,7 +147,7 @@
 			lblUserTimeFrame.Anchor = AnchorStyles.None;
 			lblUserTimeFrame.AutoSize = true;
 			lblUserTimeFrame.Font = new Font("Bahnschrift", 11F);
-			lblUserTimeFrame.Location = new Point(19, 6);
+			lblUserTimeFrame.Location = new Point(16, 2);
 			lblUserTimeFrame.Margin = new Padding(4, 0, 4, 0);
 			lblUserTimeFrame.Name = "lblUserTimeFrame";
 			lblUserTimeFrame.Size = new Size(173, 18);
@@ -154,21 +159,23 @@
 			pnlInteractClicker.Controls.Add(btnStartStop);
 			pnlInteractClicker.Controls.Add(lblHint);
 			pnlInteractClicker.Dock = DockStyle.Fill;
-			pnlInteractClicker.Location = new Point(5, 74);
+			pnlInteractClicker.Location = new Point(5, 65);
 			pnlInteractClicker.Margin = new Padding(4, 3, 4, 3);
 			pnlInteractClicker.Name = "pnlInteractClicker";
-			pnlInteractClicker.Size = new Size(266, 64);
+			pnlInteractClicker.Size = new Size(261, 54);
 			pnlInteractClicker.TabIndex = 11;
 			// 
 			// btnChangeWindowState
 			// 
 			btnChangeWindowState.Cursor = Cursors.Hand;
-			btnChangeWindowState.Dock = DockStyle.Right;
+			btnChangeWindowState.Dock = DockStyle.Fill;
 			btnChangeWindowState.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-			btnChangeWindowState.Location = new Point(549, 0);
-			btnChangeWindowState.Margin = new Padding(4, 3, 4, 3);
+			btnChangeWindowState.Location = new Point(544, 4);
+			btnChangeWindowState.MaximumSize = new Size(21, 0);
+			btnChangeWindowState.MinimumSize = new Size(21, 0);
 			btnChangeWindowState.Name = "btnChangeWindowState";
-			btnChangeWindowState.Size = new Size(21, 139);
+			tlpWindow.SetRowSpan(btnChangeWindowState, 2);
+			btnChangeWindowState.Size = new Size(21, 115);
 			btnChangeWindowState.TabIndex = 10;
 			btnChangeWindowState.Text = "<<";
 			btnChangeWindowState.UseVisualStyleBackColor = true;
@@ -179,20 +186,22 @@
 			tlpWindow.AutoSize = true;
 			tlpWindow.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 			tlpWindow.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
-			tlpWindow.ColumnCount = 2;
+			tlpWindow.ColumnCount = 3;
+			tlpWindow.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+			tlpWindow.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
 			tlpWindow.ColumnStyles.Add(new ColumnStyle());
-			tlpWindow.ColumnStyles.Add(new ColumnStyle());
+			tlpWindow.Controls.Add(btnChangeWindowState, 2, 0);
 			tlpWindow.Controls.Add(pnlUserTimeFrame, 0, 0);
 			tlpWindow.Controls.Add(pnlStandardTimeFrame, 1, 0);
 			tlpWindow.Controls.Add(pnlTimeCalculator, 1, 1);
 			tlpWindow.Controls.Add(pnlInteractClicker, 0, 1);
 			tlpWindow.Dock = DockStyle.Fill;
-			tlpWindow.Location = new Point(0, 0);
+			tlpWindow.Location = new Point(3, 3);
 			tlpWindow.Name = "tlpWindow";
 			tlpWindow.RowCount = 2;
-			tlpWindow.RowStyles.Add(new RowStyle());
-			tlpWindow.RowStyles.Add(new RowStyle());
-			tlpWindow.Size = new Size(549, 139);
+			tlpWindow.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+			tlpWindow.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+			tlpWindow.Size = new Size(570, 123);
 			tlpWindow.TabIndex = 4;
 			// 
 			// pnlStandardTimeFrame
@@ -202,10 +211,10 @@
 			pnlStandardTimeFrame.Controls.Add(btn1min);
 			pnlStandardTimeFrame.Controls.Add(btn5min);
 			pnlStandardTimeFrame.Dock = DockStyle.Fill;
-			pnlStandardTimeFrame.Location = new Point(280, 4);
+			pnlStandardTimeFrame.Location = new Point(275, 4);
 			pnlStandardTimeFrame.Margin = new Padding(4, 3, 4, 3);
 			pnlStandardTimeFrame.Name = "pnlStandardTimeFrame";
-			pnlStandardTimeFrame.Size = new Size(267, 63);
+			pnlStandardTimeFrame.Size = new Size(261, 54);
 			pnlStandardTimeFrame.TabIndex = 12;
 			// 
 			// lblStandardTimeFrame
@@ -213,7 +222,7 @@
 			lblStandardTimeFrame.Anchor = AnchorStyles.None;
 			lblStandardTimeFrame.AutoSize = true;
 			lblStandardTimeFrame.Font = new Font("Bahnschrift", 11F);
-			lblStandardTimeFrame.Location = new Point(17, 6);
+			lblStandardTimeFrame.Location = new Point(14, 2);
 			lblStandardTimeFrame.Margin = new Padding(4, 0, 4, 0);
 			lblStandardTimeFrame.Name = "lblStandardTimeFrame";
 			lblStandardTimeFrame.Size = new Size(142, 18);
@@ -226,7 +235,7 @@
 			btn30sec.AutoSize = true;
 			btn30sec.Cursor = Cursors.Hand;
 			btn30sec.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-			btn30sec.Location = new Point(18, 27);
+			btn30sec.Location = new Point(15, 23);
 			btn30sec.Margin = new Padding(4, 3, 4, 3);
 			btn30sec.Name = "btn30sec";
 			btn30sec.Size = new Size(76, 28);
@@ -241,7 +250,7 @@
 			btn1min.AutoSize = true;
 			btn1min.Cursor = Cursors.Hand;
 			btn1min.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-			btn1min.Location = new Point(100, 27);
+			btn1min.Location = new Point(97, 23);
 			btn1min.Margin = new Padding(4, 3, 4, 3);
 			btn1min.Name = "btn1min";
 			btn1min.Size = new Size(76, 28);
@@ -256,7 +265,7 @@
 			btn5min.AutoSize = true;
 			btn5min.Cursor = Cursors.Hand;
 			btn5min.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-			btn5min.Location = new Point(183, 27);
+			btn5min.Location = new Point(180, 23);
 			btn5min.Margin = new Padding(4, 3, 4, 3);
 			btn5min.Name = "btn5min";
 			btn5min.Size = new Size(76, 28);
@@ -272,17 +281,17 @@
 			pnlTimeCalculator.Controls.Add(lblCalculate);
 			pnlTimeCalculator.Controls.Add(cbTimeUnit);
 			pnlTimeCalculator.Dock = DockStyle.Fill;
-			pnlTimeCalculator.Location = new Point(280, 74);
+			pnlTimeCalculator.Location = new Point(275, 65);
 			pnlTimeCalculator.Margin = new Padding(4, 3, 4, 3);
 			pnlTimeCalculator.Name = "pnlTimeCalculator";
-			pnlTimeCalculator.Size = new Size(267, 64);
+			pnlTimeCalculator.Size = new Size(261, 54);
 			pnlTimeCalculator.TabIndex = 10;
 			// 
 			// tbCalcResult
 			// 
 			tbCalcResult.Anchor = AnchorStyles.None;
 			tbCalcResult.Font = new Font("Bahnschrift", 11.25F);
-			tbCalcResult.Location = new Point(100, 34);
+			tbCalcResult.Location = new Point(97, 29);
 			tbCalcResult.Margin = new Padding(4, 3, 4, 3);
 			tbCalcResult.Name = "tbCalcResult";
 			tbCalcResult.ReadOnly = true;
@@ -293,7 +302,7 @@
 			// 
 			nudInputTime.Anchor = AnchorStyles.None;
 			nudInputTime.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-			nudInputTime.Location = new Point(17, 6);
+			nudInputTime.Location = new Point(14, 1);
 			nudInputTime.Margin = new Padding(4, 3, 4, 3);
 			nudInputTime.Maximum = new decimal(new int[] { 2400, 0, 0, 0 });
 			nudInputTime.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
@@ -310,7 +319,7 @@
 			lblCalculate.Anchor = AnchorStyles.None;
 			lblCalculate.AutoSize = true;
 			lblCalculate.Font = new Font("Bahnschrift", 11.25F);
-			lblCalculate.Location = new Point(17, 40);
+			lblCalculate.Location = new Point(14, 35);
 			lblCalculate.Margin = new Padding(4, 0, 4, 0);
 			lblCalculate.Name = "lblCalculate";
 			lblCalculate.Size = new Size(64, 18);
@@ -324,24 +333,55 @@
 			cbTimeUnit.Font = new Font("Bahnschrift", 11.25F);
 			cbTimeUnit.FormattingEnabled = true;
 			cbTimeUnit.Items.AddRange(new object[] { "minute(s)", "second(s)" });
-			cbTimeUnit.Location = new Point(100, 6);
+			cbTimeUnit.Location = new Point(97, 1);
 			cbTimeUnit.Margin = new Padding(4, 3, 4, 3);
 			cbTimeUnit.Name = "cbTimeUnit";
 			cbTimeUnit.Size = new Size(158, 26);
 			cbTimeUnit.TabIndex = 8;
 			cbTimeUnit.SelectedIndexChanged += cbTimes_ValueChanged;
 			// 
+			// tcWindow
+			// 
+			tcWindow.Controls.Add(tpMain);
+			tcWindow.Controls.Add(tpSettings);
+			tcWindow.Dock = DockStyle.Fill;
+			tcWindow.Location = new Point(0, 0);
+			tcWindow.Name = "tcWindow";
+			tcWindow.SelectedIndex = 0;
+			tcWindow.Size = new Size(584, 157);
+			tcWindow.TabIndex = 13;
+			// 
+			// tpMain
+			// 
+			tpMain.Controls.Add(tlpWindow);
+			tpMain.Location = new Point(4, 24);
+			tpMain.Name = "tpMain";
+			tpMain.Padding = new Padding(3);
+			tpMain.Size = new Size(576, 129);
+			tpMain.TabIndex = 0;
+			tpMain.Text = "Main";
+			tpMain.UseVisualStyleBackColor = true;
+			// 
+			// tpSettings
+			// 
+			tpSettings.Location = new Point(4, 24);
+			tpSettings.Name = "tpSettings";
+			tpSettings.Padding = new Padding(3);
+			tpSettings.Size = new Size(576, 129);
+			tpSettings.TabIndex = 1;
+			tpSettings.Text = "Settings";
+			tpSettings.UseVisualStyleBackColor = true;
+			// 
 			// Window
 			// 
 			AutoScaleDimensions = new SizeF(7F, 15F);
 			AutoScaleMode = AutoScaleMode.Font;
-			ClientSize = new Size(570, 139);
-			Controls.Add(tlpWindow);
-			Controls.Add(btnChangeWindowState);
+			ClientSize = new Size(584, 157);
+			Controls.Add(tcWindow);
 			FormBorderStyle = FormBorderStyle.FixedSingle;
 			Margin = new Padding(4, 3, 4, 3);
 			MaximizeBox = false;
-			MaximumSize = new Size(586, 196);
+			MaximumSize = new Size(600, 196);
 			Name = "Window";
 			ShowIcon = false;
 			Text = "Autoclicker";
@@ -357,8 +397,10 @@
 			pnlTimeCalculator.ResumeLayout(false);
 			pnlTimeCalculator.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)nudInputTime).EndInit();
+			tcWindow.ResumeLayout(false);
+			tpMain.ResumeLayout(false);
+			tpMain.PerformLayout();
 			ResumeLayout(false);
-			PerformLayout();
 
 		}
 
@@ -385,6 +427,9 @@
 		private NumericUpDown nudInputTime;
 		private Label lblCalculate;
 		private ComboBox cbTimeUnit;
+		private TabControl tcWindow;
+		private TabPage tpMain;
+		private TabPage tpSettings;
 	}
 }
 

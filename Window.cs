@@ -4,6 +4,8 @@ namespace AutoClicker
 {
 	public partial class Window : Form
 	{
+		//max width: 586; 196
+
 		/// <summary>
 		/// Used for the click event
 		/// </summary>
@@ -261,19 +263,30 @@ namespace AutoClicker
 		/// </summary>
 		void ChangeWindow()
 		{
+			ColumnStyle fstColumn = tlpWindow.ColumnStyles[0];
+			ColumnStyle sndColumn = tlpWindow.ColumnStyles[1];
+
 			if (_windowState == State.HideExtended)
 			{
-				Width = pnlInteractClicker.Width + btnChangeWindowState.Width * 2;
+				btnChangeWindowState.Text = ">>";
+				Width = pnlInteractClicker.Width + btnChangeWindowState.Width * 3;
+
+				fstColumn.Width = 100;
+				sndColumn.Width = 0;
+
 				pnlStandardTimeFrame.Visible = false;
 				pnlTimeCalculator.Visible = false;
-				btnChangeWindowState.Text = ">>";
 			}
 			else if (_windowState == State.ShowExtended)
 			{
+				Width = _ogWidth;
+				btnChangeWindowState.Text = "<<"; 
+				
 				pnlStandardTimeFrame.Visible = true;
 				pnlTimeCalculator.Visible = true;
-				Width = _ogWidth;
-				btnChangeWindowState.Text = "<<";
+
+				fstColumn.Width = 50;
+				sndColumn.Width = 50; 
 			}
 		}
 	}
