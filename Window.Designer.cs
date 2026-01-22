@@ -55,7 +55,6 @@
 			tpSettings = new TabPage();
 			lblStartStopKeyHint = new Label();
 			btnStartStopKey = new Button();
-			lbl = new Label();
 			lblChangeControlKey = new Label();
 			((System.ComponentModel.ISupportInitialize)nudInterval).BeginInit();
 			pnlUserTimeFrame.SuspendLayout();
@@ -372,7 +371,6 @@
 			// 
 			tpSettings.Controls.Add(lblStartStopKeyHint);
 			tpSettings.Controls.Add(btnStartStopKey);
-			tpSettings.Controls.Add(lbl);
 			tpSettings.Controls.Add(lblChangeControlKey);
 			tpSettings.Location = new Point(4, 24);
 			tpSettings.Name = "tpSettings";
@@ -410,17 +408,6 @@
 			btnStartStopKey.UseVisualStyleBackColor = true;
 			btnStartStopKey.Click += btnStartStopKey_Click;
 			btnStartStopKey.KeyDown += btnStartStopKey_KeyDown;
-			// 
-			// lbl
-			// 
-			lbl.Anchor = AnchorStyles.None;
-			lbl.AutoSize = true;
-			lbl.Font = new Font("Bahnschrift", 11.25F);
-			lbl.Location = new Point(279, 54);
-			lbl.Margin = new Padding(4, 0, 4, 0);
-			lbl.Name = "lbl";
-			lbl.Size = new Size(0, 18);
-			lbl.TabIndex = 5;
 			// 
 			// lblChangeControlKey
 			// 
@@ -496,7 +483,6 @@
 		private TabPage tpMain;
 		private TabPage tpSettings;
 		private Button btnStartStopKey;
-		private Label lbl;
 		private Label lblChangeControlKey;
 		private Label lblStartStopKeyHint;
 	}

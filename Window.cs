@@ -1,5 +1,6 @@
 using AutoClicker.Properties;
 using System.Diagnostics;
+using System.Media;
 using System.Runtime.InteropServices;
 
 namespace AutoClicker
@@ -25,6 +26,8 @@ namespace AutoClicker
 		[DllImport("User32.dll")]
 		static extern short GetAsyncKeyState(Int32 vKey);
 
+		SoundPlayer _onSound;
+		SoundPlayer _offSound;
 
 		bool _clickerIsActive;
 		bool _keyIsBeingChanged;
@@ -49,6 +52,9 @@ namespace AutoClicker
 				btn1min,
 				btn5min
 			};
+
+			_onSound = new SoundPlayer(Resources.Clicker_On);
+			_offSound = new SoundPlayer(Resources.Clicker_Off);
 		}
 
 		enum MouseEventsFlags
@@ -113,11 +119,13 @@ namespace AutoClicker
 			{
 				btnStartStop.Text = "Stop Autoclicker";
 				tmrClicker.Start();
+				_onSound.Play();
 			}
 			else
 			{
 				btnStartStop.Text = "Start Autoclicker";
 				tmrClicker.Stop();
+				_offSound.Play();
 			}
 		}
 
@@ -300,8 +308,8 @@ namespace AutoClicker
 			}
 			else if (_windowState == State.ShowExtended)
 			{
-				Width = _ogWidth;
 				btnChangeWindowState.Text = "<<";
+				Width = _ogWidth;
 
 				pnlStandardTimeFrame.Visible = true;
 				pnlTimeCalculator.Visible = true;
@@ -319,8 +327,8 @@ namespace AutoClicker
 			{
 				btnStartStopKey.Text = "Press any key...";
 			}
-			else
-			{
+			else     //Cancel the changing and set it back to the current key
+			{	
 				SetStartStopKey(_startStopKey);
 			}
 		}
