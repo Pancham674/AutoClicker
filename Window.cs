@@ -1,11 +1,11 @@
+using AutoClicker.Properties;
+using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace AutoClicker
 {
 	public partial class Window : Form
 	{
-		//max width: 586; 196
-
 		/// <summary>
 		/// Used for the click event
 		/// </summary>
@@ -27,17 +27,20 @@ namespace AutoClicker
 
 
 		bool _clickerIsActive;
-		int _intervalToUse;
-		int _startStopKey;
+		bool _keyIsBeingChanged;
+
+		Keys _startStopKey;
 		State _windowState;
 		Button[] _timeFrames;
+
 		int _ogWidth;
+		int _intervalToUse;
 
 		public Window()
 		{
 			InitializeComponent();
-			
-			_startStopKey = (short)Keys.RShiftKey;
+			SetStartStopKey((Keys)Settings.Default.StartStopKey);
+
 			_windowState = State.HideExtended;
 			_ogWidth = Width;
 			_timeFrames = new Button[3]
@@ -60,12 +63,30 @@ namespace AutoClicker
 			ShowExtended
 		}
 
+		void SetStartStopKey(Keys myNewCurrentKey)
+		{
+			_startStopKey = myNewCurrentKey;
+			btnStartStopKey.Text = _startStopKey.ToString();
+			lblHint.Text = string.Concat("Press ", _startStopKey.ToString(), " to start/stop");
+
+			int xPos = pnlInteractClicker.Width / 2 - lblHint.Width / 2;
+			lblHint.Location = new Point(xPos, lblHint.Location.Y);
+		}
+
 		void Window_Load(object sender, EventArgs e)
 		{
 			tmrKeyDown.Start();
-			_intervalToUse = (int)nudInterval.Value;
+			_intervalToUse = Settings.Default.ClickInterval;
+			nudInterval.Value = _intervalToUse;
 			cbTimeUnit.SelectedIndex = 0;
 			ChangeWindow();
+		}
+
+		void Window_Closing(object sender, FormClosingEventArgs e)
+		{
+			Settings.Default.StartStopKey = (int)_startStopKey;
+			Settings.Default.ClickInterval = _intervalToUse;
+			Settings.Default.Save();
 		}
 
 		void LeftClick(Point p)
@@ -117,12 +138,12 @@ namespace AutoClicker
 		/// <param name="e"></param>
 		void tmrKeyDown_Tick(object sender, EventArgs e)
 		{
-			short keyStatus = GetAsyncKeyState(_startStopKey);
+			short keyStatus = GetAsyncKeyState((short)_startStopKey);
 
-			if ((keyStatus & 1) == 1)
+			if (keyStatus < 0)
 			{
 				ChangeActiveState();
-				Thread.Sleep(200);  //prevent enabling/disabling multiple times in a short time}
+				Thread.Sleep(200);		//prevent enabling/disabling multiple times in a short time
 			}
 		}
 
@@ -280,13 +301,65 @@ namespace AutoClicker
 			else if (_windowState == State.ShowExtended)
 			{
 				Width = _ogWidth;
-				btnChangeWindowState.Text = "<<"; 
-				
+				btnChangeWindowState.Text = "<<";
+
 				pnlStandardTimeFrame.Visible = true;
 				pnlTimeCalculator.Visible = true;
 
 				fstColumn.Width = 50;
-				sndColumn.Width = 50; 
+				sndColumn.Width = 50;
+			}
+		}
+
+		private void btnStartStopKey_Click(object sender, EventArgs e)
+		{
+			_keyIsBeingChanged = !_keyIsBeingChanged;
+
+			if (_keyIsBeingChanged)
+			{
+				btnStartStopKey.Text = "Press any key...";
+			}
+			else
+			{
+				SetStartStopKey(_startStopKey);
+			}
+		}
+
+		private void btnStartStopKey_KeyDown(object sender, KeyEventArgs e)
+		{
+			if (_keyIsBeingChanged)
+			{
+				SetStartStopKey(e.KeyCode);
+				_keyIsBeingChanged = false;
+				this.Focus();                   //Remove focus from button	
+			}
+		}
+
+		/// <summary>
+		/// Will revert the stop/start key back if the User changes tabs while updating the stop/start key in settings
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void tcWindow_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			TabPage currentTap = tcWindow.SelectedTab!;
+			
+			if (currentTap == tpMain)
+			{
+				tmrKeyDown.Start();
+				if (_keyIsBeingChanged)
+				{
+					_keyIsBeingChanged = false;
+					SetStartStopKey(_startStopKey);
+				}
+			}
+			else if (currentTap == tpSettings)
+			{
+				tmrKeyDown.Stop();              //will otherwise activate when setting the key
+				if (_clickerIsActive)
+				{
+					ChangeActiveState();
+				}
 			}
 		}
 	}
