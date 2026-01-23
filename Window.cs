@@ -7,6 +7,7 @@ namespace AutoClicker
 {
 	public partial class Window : Form
 	{
+		#region DLLImports
 		/// <summary>
 		/// Used for the click event
 		/// </summary>
@@ -25,38 +26,29 @@ namespace AutoClicker
 		/// <returns></returns>
 		[DllImport("User32.dll")]
 		static extern short GetAsyncKeyState(Int32 vKey);
+		#endregion
 
-		SoundPlayer _onSound;
-		SoundPlayer _offSound;
+		#region Globals
+		//Sounds that are played when the clicker is started/stopped
+		SoundPlayer _sndOn;
+		SoundPlayer _sndOff;
 
-		bool _clickerIsActive;
-		bool _keyIsBeingChanged;
+		bool _IsClickerActive;
+		bool _IsKeyBeingChanged;
 
-		Keys _startStopKey;
+		/// <summary>
+		/// Current state of the Window. Is either showing extended options or not.
+		/// </summary>
 		State _windowState;
-		Button[] _timeFrames;
+		Keys _startStopKey;
+		Button[] _defaultTimeFramesBtn;
 
-		int _ogWidth;
+		int _fullWidth;
+		int _holdClick;
 		int _intervalToUse;
+		#endregion
 
-		public Window()
-		{
-			InitializeComponent();
-			SetStartStopKey((Keys)Settings.Default.StartStopKey);
-
-			_windowState = State.HideExtended;
-			_ogWidth = Width;
-			_timeFrames = new Button[3]
-			{
-				btn30sec,
-				btn1min,
-				btn5min
-			};
-
-			_onSound = new SoundPlayer(Resources.Clicker_On);
-			_offSound = new SoundPlayer(Resources.Clicker_Off);
-		}
-
+		#region Enums
 		enum MouseEventsFlags
 		{
 			LeftDown = 2,
@@ -68,26 +60,39 @@ namespace AutoClicker
 			HideExtended,
 			ShowExtended
 		}
-
-		void SetStartStopKey(Keys myNewCurrentKey)
+		#endregion
+		public Window()
 		{
-			_startStopKey = myNewCurrentKey;
-			btnStartStopKey.Text = _startStopKey.ToString();
-			lblHint.Text = string.Concat("Press ", _startStopKey.ToString(), " to start/stop");
+			InitializeComponent();
+			SetStartStopKey((Keys)Settings.Default.StartStopKey);
+			_intervalToUse = Settings.Default.ClickInterval;
 
-			int xPos = pnlInteractClicker.Width / 2 - lblHint.Width / 2;
-			lblHint.Location = new Point(xPos, lblHint.Location.Y);
+			_windowState = State.HideExtended;
+			_fullWidth = Width;
+			_defaultTimeFramesBtn = new Button[3]
+			{
+				btn30sec,
+				btn1min,
+				btn5min
+			};
+
+			_sndOn = new SoundPlayer(Resources.Clicker_On);
+			_sndOff = new SoundPlayer(Resources.Clicker_Off);
 		}
 
 		void Window_Load(object sender, EventArgs e)
 		{
 			tmrKeyDown.Start();
-			_intervalToUse = Settings.Default.ClickInterval;
-			nudInterval.Value = _intervalToUse;
-			cbTimeUnit.SelectedIndex = 0;
+			nudUserInterval.Value = _intervalToUse;
+			cbTimeUnitToCalc.SelectedIndex = 0;
 			ChangeWindow();
 		}
 
+		/// <summary>
+		/// Will save User data such as click interval and start/stop key
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		void Window_Closing(object sender, FormClosingEventArgs e)
 		{
 			Settings.Default.StartStopKey = (int)_startStopKey;
@@ -95,37 +100,31 @@ namespace AutoClicker
 			Settings.Default.Save();
 		}
 
-		void LeftClick(Point p)
-		{
-			mouse_event((int)MouseEventsFlags.LeftDown, p.X, p.Y, 0, 0);
-			mouse_event((int)MouseEventsFlags.LeftUp, p.X, p.Y, 0, 0);
-		}
-
-		void btnStartStop_Click(object sender, EventArgs e)
+		void btnStartStopClicker_Click(object sender, EventArgs e)
 		{
 			ChangeActiveState();
 		}
 
 		/// <summary>
-		/// Will start/stop the timer based on if the clicker is active or not.
+		/// Will start/stop the clicker based on if the clicker is active or not.
 		/// </summary>
 		void ChangeActiveState()
 		{
-			_clickerIsActive = !_clickerIsActive;
+			_IsClickerActive = !_IsClickerActive;
 			tmrClicker.Interval = _intervalToUse;
 			tmrClicker.Enabled = true;
 
-			if (_clickerIsActive)
+			if (_IsClickerActive)
 			{
-				btnStartStop.Text = "Stop Autoclicker";
+				btnStartStopClicker.Text = "Stop Autoclicker";
 				tmrClicker.Start();
-				_onSound.Play();
+				_sndOn.Play();
 			}
 			else
 			{
-				btnStartStop.Text = "Start Autoclicker";
+				btnStartStopClicker.Text = "Start Autoclicker";
 				tmrClicker.Stop();
-				_offSound.Play();
+				_sndOff.Play();
 			}
 		}
 
@@ -134,9 +133,29 @@ namespace AutoClicker
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		void timer_Tick(object sender, EventArgs e)
+		void tmrClicker_Tick(object sender, EventArgs e)
 		{
 			LeftClick(new Point(MousePosition.X, MousePosition.Y));
+		}
+
+		void LeftClick(Point p)
+		{
+			mouse_event((int)MouseEventsFlags.LeftDown, p.X, p.Y, 0, 0);
+			mouse_event((int)MouseEventsFlags.LeftUp, p.X, p.Y, 0, 0);
+		}
+
+		/// <summary>
+		/// Will set the start/stop key to myNewCurrentKey and update everything associated to it.
+		/// </summary>
+		/// <param name="myNewCurrentKey"></param>
+		void SetStartStopKey(Keys myNewCurrentKey)
+		{
+			_startStopKey = myNewCurrentKey;
+			btnChangeStartStopKey.Text = _startStopKey.ToString();
+			lblStartStopTip.Text = string.Concat("Press ", _startStopKey.ToString(), " to start/stop");
+
+			int xPos = pnlInteractClicker.Width / 2 - lblStartStopTip.Width / 2;
+			lblStartStopTip.Location = new Point(xPos, lblStartStopTip.Location.Y);
 		}
 
 		/// <summary>
@@ -156,7 +175,7 @@ namespace AutoClicker
 		}
 
 		/// <summary>
-		/// Will set up the timers interval to the desired buttons data
+		/// Will set up the click interval to the desired buttons data
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -171,11 +190,9 @@ namespace AutoClicker
 			timeUnit = DetermineNextTimeUnit(timeUnit);
 			_intervalToUse = CalculateToMilliSeconds(timeFrame, timeUnit);
 
-			senderButton.Enabled = false;
-			Button[] uninteractedBtns = _timeFrames.Where(btn => btn != senderButton).ToArray();
-			foreach (Button btn in uninteractedBtns)
+			foreach (Button btn in _defaultTimeFramesBtn)
 			{
-				btn.Enabled = true;
+				btn.Enabled = !btn.Equals(senderButton);
 			}
 		}
 
@@ -208,21 +225,12 @@ namespace AutoClicker
 			if (myNextTimeUnit.Equals("sec"))
 			{
 				myTimeFrame *= 60;
-				myNextTimeUnit = "ms";
 			}
 
 			// convert sec to ms
-			if (myNextTimeUnit.Equals("ms"))
-			{
-				myTimeFrame *= 1000;
-			}
+			myTimeFrame *= 1000;
 
 			return myTimeFrame;
-		}
-
-		void cbTimes_ValueChanged(object sender, EventArgs e)
-		{
-			CalculateResult();
 		}
 
 		/// <summary>
@@ -234,20 +242,20 @@ namespace AutoClicker
 		void nudInput_ValueChanged(object sender, EventArgs e)
 		{
 			NumericUpDown nudSender = (NumericUpDown)sender;
-			if (nudSender == nudInputTime)
+			if (nudSender == nudTimeToCalc)
 			{
 				CalculateResult();
 			}
-			else if (nudSender == nudInterval && _intervalToUse != (int)nudSender.Value)
+			else if (nudSender == nudUserInterval && _intervalToUse != (int)nudSender.Value)
 			{
-				if (_clickerIsActive)
+				if (_IsClickerActive)
 				{
 					ChangeActiveState();
 				}
 
 				_intervalToUse = (int)nudSender.Value;
 
-				Button[] toDisable = _timeFrames.Where(b => !b.Enabled).ToArray();
+				Button[] toDisable = _defaultTimeFramesBtn.Where(b => !b.Enabled).ToArray();
 
 				foreach (Button btn in toDisable)
 				{
@@ -273,17 +281,21 @@ namespace AutoClicker
 			}
 		}
 
+		void cbTimes_ValueChanged(object sender, EventArgs e)
+		{
+			CalculateResult();
+		}
+
 		void CalculateResult()
 		{
-			string nextTimeUnit = DetermineNextTimeUnit(cbTimeUnit.Text);
-			int timeFrame = (int)nudInputTime.Value;
-			int result = CalculateToMilliSeconds(timeFrame, nextTimeUnit);
-			tbCalcResult.Text = result > 0 ? result.ToString() : "ERROR";
+			string nextTimeUnit = DetermineNextTimeUnit(cbTimeUnitToCalc.Text);
+			int result = CalculateToMilliSeconds((int)nudTimeToCalc.Value, nextTimeUnit);
+			tbResultInMs.Text = result > 0 ? result.ToString() : "ERROR";
 		}
 
 		void btnChangeWindowState_Click(object sender, EventArgs e)
 		{
-			_windowState = _windowState == State.HideExtended ? State.ShowExtended : State.HideExtended;
+			_windowState = _windowState.Equals(State.HideExtended) ? State.ShowExtended : State.HideExtended;
 			ChangeWindow();
 		}
 
@@ -303,15 +315,15 @@ namespace AutoClicker
 				fstColumn.Width = 100;
 				sndColumn.Width = 0;
 
-				pnlStandardTimeFrame.Visible = false;
+				pnlDefaultTimeFrame.Visible = false;
 				pnlTimeCalculator.Visible = false;
 			}
 			else if (_windowState == State.ShowExtended)
 			{
 				btnChangeWindowState.Text = "<<";
-				Width = _ogWidth;
+				Width = _fullWidth;
 
-				pnlStandardTimeFrame.Visible = true;
+				pnlDefaultTimeFrame.Visible = true;
 				pnlTimeCalculator.Visible = true;
 
 				fstColumn.Width = 50;
@@ -319,13 +331,13 @@ namespace AutoClicker
 			}
 		}
 
-		private void btnStartStopKey_Click(object sender, EventArgs e)
+		void btnStartStopKey_Click(object sender, EventArgs e)
 		{
-			_keyIsBeingChanged = !_keyIsBeingChanged;
+			_IsKeyBeingChanged = !_IsKeyBeingChanged;
 
-			if (_keyIsBeingChanged)
+			if (_IsKeyBeingChanged)
 			{
-				btnStartStopKey.Text = "Press any key...";
+				btnChangeStartStopKey.Text = "Press any key...";
 			}
 			else     //Cancel the changing and set it back to the current key
 			{	
@@ -333,12 +345,12 @@ namespace AutoClicker
 			}
 		}
 
-		private void btnStartStopKey_KeyDown(object sender, KeyEventArgs e)
+		void btnStartStopKey_KeyDown(object sender, KeyEventArgs e)
 		{
-			if (_keyIsBeingChanged)
+			if (_IsKeyBeingChanged)
 			{
 				SetStartStopKey(e.KeyCode);
-				_keyIsBeingChanged = false;
+				_IsKeyBeingChanged = false;
 				this.Focus();                   //Remove focus from button	
 			}
 		}
@@ -348,23 +360,23 @@ namespace AutoClicker
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void tcWindow_SelectedIndexChanged(object sender, EventArgs e)
+		void tcWindow_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			TabPage currentTap = tcWindow.SelectedTab!;
 			
 			if (currentTap == tpMain)
 			{
 				tmrKeyDown.Start();
-				if (_keyIsBeingChanged)
+				if (_IsKeyBeingChanged)
 				{
-					_keyIsBeingChanged = false;
+					_IsKeyBeingChanged = false;
 					SetStartStopKey(_startStopKey);
 				}
 			}
 			else if (currentTap == tpSettings)
 			{
 				tmrKeyDown.Stop();              //will otherwise activate when setting the key
-				if (_clickerIsActive)
+				if (_IsClickerActive)
 				{
 					ChangeActiveState();
 				}

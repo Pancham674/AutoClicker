@@ -29,59 +29,59 @@
 		private void InitializeComponent()
 		{
 			components = new System.ComponentModel.Container();
-			btnStartStop = new Button();
+			btnStartStopClicker = new Button();
 			lblInterval = new Label();
 			tmrClicker = new System.Windows.Forms.Timer(components);
-			nudInterval = new NumericUpDown();
+			nudUserInterval = new NumericUpDown();
 			tmrKeyDown = new System.Windows.Forms.Timer(components);
-			lblHint = new Label();
+			lblStartStopTip = new Label();
 			pnlUserTimeFrame = new Panel();
 			lblUserTimeFrame = new Label();
 			pnlInteractClicker = new Panel();
 			btnChangeWindowState = new Button();
 			tlpWindow = new TableLayoutPanel();
-			pnlStandardTimeFrame = new Panel();
+			pnlDefaultTimeFrame = new Panel();
 			lblStandardTimeFrame = new Label();
 			btn30sec = new Button();
 			btn1min = new Button();
 			btn5min = new Button();
 			pnlTimeCalculator = new Panel();
-			tbCalcResult = new TextBox();
-			nudInputTime = new NumericUpDown();
-			lblCalculate = new Label();
-			cbTimeUnit = new ComboBox();
+			tbResultInMs = new TextBox();
+			nudTimeToCalc = new NumericUpDown();
+			lblResultInMs = new Label();
+			cbTimeUnitToCalc = new ComboBox();
 			tcWindow = new TabControl();
 			tpMain = new TabPage();
 			tpSettings = new TabPage();
-			lblStartStopKeyHint = new Label();
-			btnStartStopKey = new Button();
-			lblChangeControlKey = new Label();
-			((System.ComponentModel.ISupportInitialize)nudInterval).BeginInit();
+			lblStartStopKeyTip = new Label();
+			btnChangeStartStopKey = new Button();
+			lblChangeStartStopKey = new Label();
+			((System.ComponentModel.ISupportInitialize)nudUserInterval).BeginInit();
 			pnlUserTimeFrame.SuspendLayout();
 			pnlInteractClicker.SuspendLayout();
 			tlpWindow.SuspendLayout();
-			pnlStandardTimeFrame.SuspendLayout();
+			pnlDefaultTimeFrame.SuspendLayout();
 			pnlTimeCalculator.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)nudInputTime).BeginInit();
+			((System.ComponentModel.ISupportInitialize)nudTimeToCalc).BeginInit();
 			tcWindow.SuspendLayout();
 			tpMain.SuspendLayout();
 			tpSettings.SuspendLayout();
 			SuspendLayout();
 			// 
-			// btnStartStop
+			// btnStartStopClicker
 			// 
-			btnStartStop.Anchor = AnchorStyles.None;
-			btnStartStop.AutoSize = true;
-			btnStartStop.Cursor = Cursors.Hand;
-			btnStartStop.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-			btnStartStop.Location = new Point(49, 4);
-			btnStartStop.Margin = new Padding(4, 3, 4, 3);
-			btnStartStop.Name = "btnStartStop";
-			btnStartStop.Size = new Size(163, 28);
-			btnStartStop.TabIndex = 0;
-			btnStartStop.Text = "Start Autoclicker";
-			btnStartStop.UseVisualStyleBackColor = true;
-			btnStartStop.Click += btnStartStop_Click;
+			btnStartStopClicker.Anchor = AnchorStyles.None;
+			btnStartStopClicker.AutoSize = true;
+			btnStartStopClicker.Cursor = Cursors.Hand;
+			btnStartStopClicker.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+			btnStartStopClicker.Location = new Point(49, 4);
+			btnStartStopClicker.Margin = new Padding(4, 3, 4, 3);
+			btnStartStopClicker.Name = "btnStartStopClicker";
+			btnStartStopClicker.Size = new Size(163, 28);
+			btnStartStopClicker.TabIndex = 0;
+			btnStartStopClicker.Text = "Start Autoclicker";
+			btnStartStopClicker.UseVisualStyleBackColor = true;
+			btnStartStopClicker.Click += btnStartStopClicker_Click;
 			// 
 			// lblInterval
 			// 
@@ -97,46 +97,46 @@
 			// 
 			// tmrClicker
 			// 
-			tmrClicker.Tick += timer_Tick;
+			tmrClicker.Tick += tmrClicker_Tick;
 			// 
-			// nudInterval
+			// nudUserInterval
 			// 
-			nudInterval.Anchor = AnchorStyles.None;
-			nudInterval.AutoSize = true;
-			nudInterval.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-			nudInterval.Location = new Point(126, 24);
-			nudInterval.Margin = new Padding(4, 3, 4, 3);
-			nudInterval.Maximum = new decimal(new int[] { 2400000, 0, 0, 0 });
-			nudInterval.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-			nudInterval.Name = "nudInterval";
-			nudInterval.Size = new Size(102, 26);
-			nudInterval.TabIndex = 2;
-			nudInterval.Tag = "interval";
-			nudInterval.Value = new decimal(new int[] { 1, 0, 0, 0 });
-			nudInterval.ValueChanged += nudInput_ValueChanged;
-			nudInterval.KeyPress += nudInput_KeyPress;
+			nudUserInterval.Anchor = AnchorStyles.None;
+			nudUserInterval.AutoSize = true;
+			nudUserInterval.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+			nudUserInterval.Location = new Point(126, 24);
+			nudUserInterval.Margin = new Padding(4, 3, 4, 3);
+			nudUserInterval.Maximum = new decimal(new int[] { 2400000, 0, 0, 0 });
+			nudUserInterval.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+			nudUserInterval.Name = "nudUserInterval";
+			nudUserInterval.Size = new Size(102, 26);
+			nudUserInterval.TabIndex = 2;
+			nudUserInterval.Tag = "interval";
+			nudUserInterval.Value = new decimal(new int[] { 1, 0, 0, 0 });
+			nudUserInterval.ValueChanged += nudInput_ValueChanged;
+			nudUserInterval.KeyPress += nudInput_KeyPress;
 			// 
 			// tmrKeyDown
 			// 
 			tmrKeyDown.Enabled = true;
 			tmrKeyDown.Tick += tmrKeyDown_Tick;
 			// 
-			// lblHint
+			// lblStartStopTip
 			// 
-			lblHint.Anchor = AnchorStyles.None;
-			lblHint.AutoSize = true;
-			lblHint.Font = new Font("Bahnschrift", 11F);
-			lblHint.ForeColor = SystemColors.ControlDarkDark;
-			lblHint.Location = new Point(27, 35);
-			lblHint.Margin = new Padding(4, 0, 4, 0);
-			lblHint.Name = "lblHint";
-			lblHint.Size = new Size(209, 18);
-			lblHint.TabIndex = 3;
-			lblHint.Text = "Press Right Shift to start/stop";
+			lblStartStopTip.Anchor = AnchorStyles.None;
+			lblStartStopTip.AutoSize = true;
+			lblStartStopTip.Font = new Font("Bahnschrift", 11F);
+			lblStartStopTip.ForeColor = SystemColors.ControlDarkDark;
+			lblStartStopTip.Location = new Point(27, 35);
+			lblStartStopTip.Margin = new Padding(4, 0, 4, 0);
+			lblStartStopTip.Name = "lblStartStopTip";
+			lblStartStopTip.Size = new Size(209, 18);
+			lblStartStopTip.TabIndex = 3;
+			lblStartStopTip.Text = "Press Right Shift to start/stop";
 			// 
 			// pnlUserTimeFrame
 			// 
-			pnlUserTimeFrame.Controls.Add(nudInterval);
+			pnlUserTimeFrame.Controls.Add(nudUserInterval);
 			pnlUserTimeFrame.Controls.Add(lblUserTimeFrame);
 			pnlUserTimeFrame.Controls.Add(lblInterval);
 			pnlUserTimeFrame.Dock = DockStyle.Fill;
@@ -160,8 +160,8 @@
 			// 
 			// pnlInteractClicker
 			// 
-			pnlInteractClicker.Controls.Add(btnStartStop);
-			pnlInteractClicker.Controls.Add(lblHint);
+			pnlInteractClicker.Controls.Add(btnStartStopClicker);
+			pnlInteractClicker.Controls.Add(lblStartStopTip);
 			pnlInteractClicker.Dock = DockStyle.Fill;
 			pnlInteractClicker.Location = new Point(5, 67);
 			pnlInteractClicker.Margin = new Padding(4, 3, 4, 3);
@@ -196,7 +196,7 @@
 			tlpWindow.ColumnStyles.Add(new ColumnStyle());
 			tlpWindow.Controls.Add(btnChangeWindowState, 2, 0);
 			tlpWindow.Controls.Add(pnlUserTimeFrame, 0, 0);
-			tlpWindow.Controls.Add(pnlStandardTimeFrame, 1, 0);
+			tlpWindow.Controls.Add(pnlDefaultTimeFrame, 1, 0);
 			tlpWindow.Controls.Add(pnlTimeCalculator, 1, 1);
 			tlpWindow.Controls.Add(pnlInteractClicker, 0, 1);
 			tlpWindow.Dock = DockStyle.Fill;
@@ -208,18 +208,18 @@
 			tlpWindow.Size = new Size(570, 127);
 			tlpWindow.TabIndex = 4;
 			// 
-			// pnlStandardTimeFrame
+			// pnlDefaultTimeFrame
 			// 
-			pnlStandardTimeFrame.Controls.Add(lblStandardTimeFrame);
-			pnlStandardTimeFrame.Controls.Add(btn30sec);
-			pnlStandardTimeFrame.Controls.Add(btn1min);
-			pnlStandardTimeFrame.Controls.Add(btn5min);
-			pnlStandardTimeFrame.Dock = DockStyle.Fill;
-			pnlStandardTimeFrame.Location = new Point(275, 4);
-			pnlStandardTimeFrame.Margin = new Padding(4, 3, 4, 3);
-			pnlStandardTimeFrame.Name = "pnlStandardTimeFrame";
-			pnlStandardTimeFrame.Size = new Size(261, 56);
-			pnlStandardTimeFrame.TabIndex = 12;
+			pnlDefaultTimeFrame.Controls.Add(lblStandardTimeFrame);
+			pnlDefaultTimeFrame.Controls.Add(btn30sec);
+			pnlDefaultTimeFrame.Controls.Add(btn1min);
+			pnlDefaultTimeFrame.Controls.Add(btn5min);
+			pnlDefaultTimeFrame.Dock = DockStyle.Fill;
+			pnlDefaultTimeFrame.Location = new Point(275, 4);
+			pnlDefaultTimeFrame.Margin = new Padding(4, 3, 4, 3);
+			pnlDefaultTimeFrame.Name = "pnlDefaultTimeFrame";
+			pnlDefaultTimeFrame.Size = new Size(261, 56);
+			pnlDefaultTimeFrame.TabIndex = 12;
 			// 
 			// lblStandardTimeFrame
 			// 
@@ -280,10 +280,10 @@
 			// 
 			// pnlTimeCalculator
 			// 
-			pnlTimeCalculator.Controls.Add(tbCalcResult);
-			pnlTimeCalculator.Controls.Add(nudInputTime);
-			pnlTimeCalculator.Controls.Add(lblCalculate);
-			pnlTimeCalculator.Controls.Add(cbTimeUnit);
+			pnlTimeCalculator.Controls.Add(tbResultInMs);
+			pnlTimeCalculator.Controls.Add(nudTimeToCalc);
+			pnlTimeCalculator.Controls.Add(lblResultInMs);
+			pnlTimeCalculator.Controls.Add(cbTimeUnitToCalc);
 			pnlTimeCalculator.Dock = DockStyle.Fill;
 			pnlTimeCalculator.Location = new Point(275, 67);
 			pnlTimeCalculator.Margin = new Padding(4, 3, 4, 3);
@@ -291,58 +291,58 @@
 			pnlTimeCalculator.Size = new Size(261, 56);
 			pnlTimeCalculator.TabIndex = 10;
 			// 
-			// tbCalcResult
+			// tbResultInMs
 			// 
-			tbCalcResult.Anchor = AnchorStyles.None;
-			tbCalcResult.Font = new Font("Bahnschrift", 11.25F);
-			tbCalcResult.Location = new Point(97, 30);
-			tbCalcResult.Margin = new Padding(4, 3, 4, 3);
-			tbCalcResult.Name = "tbCalcResult";
-			tbCalcResult.ReadOnly = true;
-			tbCalcResult.Size = new Size(158, 26);
-			tbCalcResult.TabIndex = 9;
+			tbResultInMs.Anchor = AnchorStyles.None;
+			tbResultInMs.Font = new Font("Bahnschrift", 11.25F);
+			tbResultInMs.Location = new Point(97, 30);
+			tbResultInMs.Margin = new Padding(4, 3, 4, 3);
+			tbResultInMs.Name = "tbResultInMs";
+			tbResultInMs.ReadOnly = true;
+			tbResultInMs.Size = new Size(158, 26);
+			tbResultInMs.TabIndex = 9;
 			// 
-			// nudInputTime
+			// nudTimeToCalc
 			// 
-			nudInputTime.Anchor = AnchorStyles.None;
-			nudInputTime.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-			nudInputTime.Location = new Point(14, 2);
-			nudInputTime.Margin = new Padding(4, 3, 4, 3);
-			nudInputTime.Maximum = new decimal(new int[] { 2400, 0, 0, 0 });
-			nudInputTime.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-			nudInputTime.Name = "nudInputTime";
-			nudInputTime.Size = new Size(71, 26);
-			nudInputTime.TabIndex = 3;
-			nudInputTime.Tag = "calculate";
-			nudInputTime.Value = new decimal(new int[] { 10, 0, 0, 0 });
-			nudInputTime.ValueChanged += nudInput_ValueChanged;
-			nudInputTime.KeyPress += nudInput_KeyPress;
+			nudTimeToCalc.Anchor = AnchorStyles.None;
+			nudTimeToCalc.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+			nudTimeToCalc.Location = new Point(14, 2);
+			nudTimeToCalc.Margin = new Padding(4, 3, 4, 3);
+			nudTimeToCalc.Maximum = new decimal(new int[] { 2400, 0, 0, 0 });
+			nudTimeToCalc.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+			nudTimeToCalc.Name = "nudTimeToCalc";
+			nudTimeToCalc.Size = new Size(71, 26);
+			nudTimeToCalc.TabIndex = 3;
+			nudTimeToCalc.Tag = "calculate";
+			nudTimeToCalc.Value = new decimal(new int[] { 10, 0, 0, 0 });
+			nudTimeToCalc.ValueChanged += nudInput_ValueChanged;
+			nudTimeToCalc.KeyPress += nudInput_KeyPress;
 			// 
-			// lblCalculate
+			// lblResultInMs
 			// 
-			lblCalculate.Anchor = AnchorStyles.None;
-			lblCalculate.AutoSize = true;
-			lblCalculate.Font = new Font("Bahnschrift", 11.25F);
-			lblCalculate.Location = new Point(14, 36);
-			lblCalculate.Margin = new Padding(4, 0, 4, 0);
-			lblCalculate.Name = "lblCalculate";
-			lblCalculate.Size = new Size(64, 18);
-			lblCalculate.TabIndex = 3;
-			lblCalculate.Text = "in ms is:";
+			lblResultInMs.Anchor = AnchorStyles.None;
+			lblResultInMs.AutoSize = true;
+			lblResultInMs.Font = new Font("Bahnschrift", 11.25F);
+			lblResultInMs.Location = new Point(14, 36);
+			lblResultInMs.Margin = new Padding(4, 0, 4, 0);
+			lblResultInMs.Name = "lblResultInMs";
+			lblResultInMs.Size = new Size(64, 18);
+			lblResultInMs.TabIndex = 3;
+			lblResultInMs.Text = "in ms is:";
 			// 
-			// cbTimeUnit
+			// cbTimeUnitToCalc
 			// 
-			cbTimeUnit.Anchor = AnchorStyles.None;
-			cbTimeUnit.DropDownStyle = ComboBoxStyle.DropDownList;
-			cbTimeUnit.Font = new Font("Bahnschrift", 11.25F);
-			cbTimeUnit.FormattingEnabled = true;
-			cbTimeUnit.Items.AddRange(new object[] { "minute(s)", "second(s)" });
-			cbTimeUnit.Location = new Point(97, 2);
-			cbTimeUnit.Margin = new Padding(4, 3, 4, 3);
-			cbTimeUnit.Name = "cbTimeUnit";
-			cbTimeUnit.Size = new Size(158, 26);
-			cbTimeUnit.TabIndex = 8;
-			cbTimeUnit.SelectedIndexChanged += cbTimes_ValueChanged;
+			cbTimeUnitToCalc.Anchor = AnchorStyles.None;
+			cbTimeUnitToCalc.DropDownStyle = ComboBoxStyle.DropDownList;
+			cbTimeUnitToCalc.Font = new Font("Bahnschrift", 11.25F);
+			cbTimeUnitToCalc.FormattingEnabled = true;
+			cbTimeUnitToCalc.Items.AddRange(new object[] { "minute(s)", "second(s)" });
+			cbTimeUnitToCalc.Location = new Point(97, 2);
+			cbTimeUnitToCalc.Margin = new Padding(4, 3, 4, 3);
+			cbTimeUnitToCalc.Name = "cbTimeUnitToCalc";
+			cbTimeUnitToCalc.Size = new Size(158, 26);
+			cbTimeUnitToCalc.TabIndex = 8;
+			cbTimeUnitToCalc.SelectedIndexChanged += cbTimes_ValueChanged;
 			// 
 			// tcWindow
 			// 
@@ -369,9 +369,9 @@
 			// 
 			// tpSettings
 			// 
-			tpSettings.Controls.Add(lblStartStopKeyHint);
-			tpSettings.Controls.Add(btnStartStopKey);
-			tpSettings.Controls.Add(lblChangeControlKey);
+			tpSettings.Controls.Add(lblStartStopKeyTip);
+			tpSettings.Controls.Add(btnChangeStartStopKey);
+			tpSettings.Controls.Add(lblChangeStartStopKey);
 			tpSettings.Location = new Point(4, 24);
 			tpSettings.Name = "tpSettings";
 			tpSettings.Padding = new Padding(3);
@@ -380,45 +380,46 @@
 			tpSettings.Text = "Settings";
 			tpSettings.UseVisualStyleBackColor = true;
 			// 
-			// lblStartStopKeyHint
+			// lblStartStopKeyTip
 			// 
-			lblStartStopKeyHint.Anchor = AnchorStyles.None;
-			lblStartStopKeyHint.AutoSize = true;
-			lblStartStopKeyHint.Font = new Font("Bahnschrift", 11F);
-			lblStartStopKeyHint.ForeColor = SystemColors.ControlDarkDark;
-			lblStartStopKeyHint.Location = new Point(178, 73);
-			lblStartStopKeyHint.Margin = new Padding(4, 0, 4, 0);
-			lblStartStopKeyHint.Name = "lblStartStopKeyHint";
-			lblStartStopKeyHint.Size = new Size(221, 18);
-			lblStartStopKeyHint.TabIndex = 7;
-			lblStartStopKeyHint.Text = "Press the button again to cancel";
+			lblStartStopKeyTip.Anchor = AnchorStyles.None;
+			lblStartStopKeyTip.AutoSize = true;
+			lblStartStopKeyTip.Font = new Font("Bahnschrift", 11F);
+			lblStartStopKeyTip.ForeColor = SystemColors.ControlDarkDark;
+			lblStartStopKeyTip.Location = new Point(178, 73);
+			lblStartStopKeyTip.Margin = new Padding(4, 0, 4, 0);
+			lblStartStopKeyTip.Name = "lblStartStopKeyTip";
+			lblStartStopKeyTip.Size = new Size(221, 18);
+			lblStartStopKeyTip.TabIndex = 7;
+			lblStartStopKeyTip.Text = "Press the button again to cancel";
 			// 
-			// btnStartStopKey
+			// btnChangeStartStopKey
 			// 
-			btnStartStopKey.Anchor = AnchorStyles.None;
-			btnStartStopKey.AutoSize = true;
-			btnStartStopKey.Cursor = Cursors.Hand;
-			btnStartStopKey.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-			btnStartStopKey.Location = new Point(298, 42);
-			btnStartStopKey.Margin = new Padding(4, 3, 4, 3);
-			btnStartStopKey.Name = "btnStartStopKey";
-			btnStartStopKey.Size = new Size(117, 28);
-			btnStartStopKey.TabIndex = 6;
-			btnStartStopKey.Text = "_startStopKey";
-			btnStartStopKey.UseVisualStyleBackColor = true;
-			btnStartStopKey.Click += btnStartStopKey_Click;
-			btnStartStopKey.KeyDown += btnStartStopKey_KeyDown;
+			btnChangeStartStopKey.Anchor = AnchorStyles.None;
+			btnChangeStartStopKey.AutoSize = true;
+			btnChangeStartStopKey.Cursor = Cursors.Hand;
+			btnChangeStartStopKey.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+			btnChangeStartStopKey.Location = new Point(298, 42);
+			btnChangeStartStopKey.Margin = new Padding(4, 3, 4, 3);
+			btnChangeStartStopKey.Name = "btnChangeStartStopKey";
+			btnChangeStartStopKey.Size = new Size(117, 28);
+			btnChangeStartStopKey.TabIndex = 6;
+			btnChangeStartStopKey.Text = "_startStopKey";
+			btnChangeStartStopKey.UseVisualStyleBackColor = true;
+			btnChangeStartStopKey.Click += btnStartStopKey_Click;
+			btnChangeStartStopKey.KeyDown += btnStartStopKey_KeyDown;
 			// 
-			// lblChangeControlKey
+			// lblChangeStartStopKey
 			// 
-			lblChangeControlKey.Anchor = AnchorStyles.None;
-			lblChangeControlKey.Font = new Font("Bahnschrift", 11.25F);
-			lblChangeControlKey.Location = new Point(162, 47);
-			lblChangeControlKey.Margin = new Padding(4, 0, 4, 0);
-			lblChangeControlKey.Name = "lblChangeControlKey";
-			lblChangeControlKey.Size = new Size(128, 23);
-			lblChangeControlKey.TabIndex = 4;
-			lblChangeControlKey.Text = "Key to start/stop:";
+			lblChangeStartStopKey.Anchor = AnchorStyles.None;
+			lblChangeStartStopKey.AutoSize = true;
+			lblChangeStartStopKey.Font = new Font("Bahnschrift", 11.25F);
+			lblChangeStartStopKey.Location = new Point(162, 47);
+			lblChangeStartStopKey.Margin = new Padding(4, 0, 4, 0);
+			lblChangeStartStopKey.Name = "lblChangeStartStopKey";
+			lblChangeStartStopKey.Size = new Size(124, 18);
+			lblChangeStartStopKey.TabIndex = 4;
+			lblChangeStartStopKey.Text = "Key to start/stop:";
 			// 
 			// Window
 			// 
@@ -436,17 +437,17 @@
 			Text = "Autoclicker";
 			FormClosing += Window_Closing;
 			Load += Window_Load;
-			((System.ComponentModel.ISupportInitialize)nudInterval).EndInit();
+			((System.ComponentModel.ISupportInitialize)nudUserInterval).EndInit();
 			pnlUserTimeFrame.ResumeLayout(false);
 			pnlUserTimeFrame.PerformLayout();
 			pnlInteractClicker.ResumeLayout(false);
 			pnlInteractClicker.PerformLayout();
 			tlpWindow.ResumeLayout(false);
-			pnlStandardTimeFrame.ResumeLayout(false);
-			pnlStandardTimeFrame.PerformLayout();
+			pnlDefaultTimeFrame.ResumeLayout(false);
+			pnlDefaultTimeFrame.PerformLayout();
 			pnlTimeCalculator.ResumeLayout(false);
 			pnlTimeCalculator.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)nudInputTime).EndInit();
+			((System.ComponentModel.ISupportInitialize)nudTimeToCalc).EndInit();
 			tcWindow.ResumeLayout(false);
 			tpMain.ResumeLayout(false);
 			tpMain.PerformLayout();
@@ -458,33 +459,33 @@
 
 		#endregion
 
-		private System.Windows.Forms.Button btnStartStop;
+		private System.Windows.Forms.Button btnStartStopClicker;
 		private System.Windows.Forms.Label lblInterval;
 		private System.Windows.Forms.Timer tmrClicker;
-		private System.Windows.Forms.NumericUpDown nudInterval;
+		private System.Windows.Forms.NumericUpDown nudUserInterval;
 		private System.Windows.Forms.Timer tmrKeyDown;
-		private System.Windows.Forms.Label lblHint;
+		private System.Windows.Forms.Label lblStartStopTip;
 		private System.Windows.Forms.Panel pnlUserTimeFrame;
 		private System.Windows.Forms.Label lblUserTimeFrame;
 		private System.Windows.Forms.Panel pnlInteractClicker;
 		private System.Windows.Forms.Button btnChangeWindowState;
 		private TableLayoutPanel tlpWindow;
-		private Panel pnlStandardTimeFrame;
+		private Panel pnlDefaultTimeFrame;
 		private Label lblStandardTimeFrame;
 		private Button btn30sec;
 		private Button btn1min;
 		private Button btn5min;
 		private Panel pnlTimeCalculator;
-		private TextBox tbCalcResult;
-		private NumericUpDown nudInputTime;
-		private Label lblCalculate;
-		private ComboBox cbTimeUnit;
+		private TextBox tbResultInMs;
+		private NumericUpDown nudTimeToCalc;
+		private Label lblResultInMs;
+		private ComboBox cbTimeUnitToCalc;
 		private TabControl tcWindow;
 		private TabPage tpMain;
 		private TabPage tpSettings;
-		private Button btnStartStopKey;
-		private Label lblChangeControlKey;
-		private Label lblStartStopKeyHint;
+		private Button btnChangeStartStopKey;
+		private Label lblChangeStartStopKey;
+		private Label lblStartStopKeyTip;
 	}
 }
 
