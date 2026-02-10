@@ -30,4 +30,4 @@ There are three predefined times to choose from. Once selected, the clicker will
 2. Start program
     ```bash
     dotnet build
-    AutoClicker\bin\Debug\AutoClicker.exe
+    bin\Debug\net10.0-windows\AutoClicker.exe
