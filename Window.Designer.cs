@@ -510,10 +510,10 @@
 			btnSoundStop.AutoEllipsis = true;
 			btnSoundStop.Cursor = Cursors.Hand;
 			btnSoundStop.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-			btnSoundStop.Location = new Point(241, 28);
+			btnSoundStop.Location = new Point(239, 28);
 			btnSoundStop.Margin = new Padding(4, 3, 4, 3);
 			btnSoundStop.Name = "btnSoundStop";
-			btnSoundStop.Size = new Size(112, 28);
+			btnSoundStop.Size = new Size(116, 28);
 			btnSoundStop.TabIndex = 10;
 			btnSoundStop.Tag = "stop";
 			btnSoundStop.Text = "default";
@@ -538,10 +538,10 @@
 			btnSoundStart.AutoEllipsis = true;
 			btnSoundStart.Cursor = Cursors.Hand;
 			btnSoundStart.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-			btnSoundStart.Location = new Point(241, 0);
+			btnSoundStart.Location = new Point(239, 0);
 			btnSoundStart.Margin = new Padding(4, 3, 4, 3);
 			btnSoundStart.Name = "btnSoundStart";
-			btnSoundStart.Size = new Size(112, 28);
+			btnSoundStart.Size = new Size(116, 28);
 			btnSoundStart.TabIndex = 8;
 			btnSoundStart.Tag = "start";
 			btnSoundStart.Text = "default";
@@ -553,7 +553,7 @@
 			lblSoundStop.Anchor = AnchorStyles.None;
 			lblSoundStop.AutoSize = true;
 			lblSoundStop.Font = new Font("Bahnschrift", 11.25F);
-			lblSoundStop.Location = new Point(144, 32);
+			lblSoundStop.Location = new Point(143, 32);
 			lblSoundStop.Margin = new Padding(4, 0, 4, 0);
 			lblSoundStop.Name = "lblSoundStop";
 			lblSoundStop.Size = new Size(85, 18);
