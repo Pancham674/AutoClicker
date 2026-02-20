@@ -53,9 +53,18 @@
 			tcWindow = new TabControl();
 			tpMain = new TabPage();
 			tpSettings = new TabPage();
-			lblStartStopKeyTip = new Label();
+			tlpSettings = new TableLayoutPanel();
+			pnlChangeStartStopKey = new Panel();
 			btnChangeStartStopKey = new Button();
+			lblStartStopKeyTip = new Label();
 			lblChangeStartStopKey = new Label();
+			pnlChangeSounds = new Panel();
+			btnSoundStopReset = new Button();
+			btnSoundStartReset = new Button();
+			btnSoundStop = new Button();
+			lblSoundStart = new Label();
+			btnSoundStart = new Button();
+			lblSoundStop = new Label();
 			((System.ComponentModel.ISupportInitialize)nudUserInterval).BeginInit();
 			pnlUserTimeFrame.SuspendLayout();
 			pnlInteractClicker.SuspendLayout();
@@ -66,6 +75,9 @@
 			tcWindow.SuspendLayout();
 			tpMain.SuspendLayout();
 			tpSettings.SuspendLayout();
+			tlpSettings.SuspendLayout();
+			pnlChangeStartStopKey.SuspendLayout();
+			pnlChangeSounds.SuspendLayout();
 			SuspendLayout();
 			// 
 			// btnStartStopClicker
@@ -369,9 +381,7 @@
 			// 
 			// tpSettings
 			// 
-			tpSettings.Controls.Add(lblStartStopKeyTip);
-			tpSettings.Controls.Add(btnChangeStartStopKey);
-			tpSettings.Controls.Add(lblChangeStartStopKey);
+			tpSettings.Controls.Add(tlpSettings);
 			tpSettings.Location = new Point(4, 24);
 			tpSettings.Name = "tpSettings";
 			tpSettings.Padding = new Padding(3);
@@ -380,18 +390,32 @@
 			tpSettings.Text = "Settings";
 			tpSettings.UseVisualStyleBackColor = true;
 			// 
-			// lblStartStopKeyTip
+			// tlpSettings
 			// 
-			lblStartStopKeyTip.Anchor = AnchorStyles.None;
-			lblStartStopKeyTip.AutoSize = true;
-			lblStartStopKeyTip.Font = new Font("Bahnschrift", 11F);
-			lblStartStopKeyTip.ForeColor = SystemColors.ControlDarkDark;
-			lblStartStopKeyTip.Location = new Point(178, 73);
-			lblStartStopKeyTip.Margin = new Padding(4, 0, 4, 0);
-			lblStartStopKeyTip.Name = "lblStartStopKeyTip";
-			lblStartStopKeyTip.Size = new Size(221, 18);
-			lblStartStopKeyTip.TabIndex = 7;
-			lblStartStopKeyTip.Text = "Press the button again to cancel";
+			tlpSettings.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
+			tlpSettings.ColumnCount = 1;
+			tlpSettings.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50F));
+			tlpSettings.Controls.Add(pnlChangeStartStopKey, 0, 0);
+			tlpSettings.Controls.Add(pnlChangeSounds, 0, 1);
+			tlpSettings.Dock = DockStyle.Fill;
+			tlpSettings.Location = new Point(3, 3);
+			tlpSettings.Name = "tlpSettings";
+			tlpSettings.RowCount = 2;
+			tlpSettings.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+			tlpSettings.RowStyles.Add(new RowStyle(SizeType.Percent, 50F));
+			tlpSettings.Size = new Size(570, 127);
+			tlpSettings.TabIndex = 8;
+			// 
+			// pnlChangeStartStopKey
+			// 
+			pnlChangeStartStopKey.Controls.Add(btnChangeStartStopKey);
+			pnlChangeStartStopKey.Controls.Add(lblStartStopKeyTip);
+			pnlChangeStartStopKey.Controls.Add(lblChangeStartStopKey);
+			pnlChangeStartStopKey.Dock = DockStyle.Fill;
+			pnlChangeStartStopKey.Location = new Point(4, 4);
+			pnlChangeStartStopKey.Name = "pnlChangeStartStopKey";
+			pnlChangeStartStopKey.Size = new Size(562, 56);
+			pnlChangeStartStopKey.TabIndex = 8;
 			// 
 			// btnChangeStartStopKey
 			// 
@@ -399,27 +423,142 @@
 			btnChangeStartStopKey.AutoSize = true;
 			btnChangeStartStopKey.Cursor = Cursors.Hand;
 			btnChangeStartStopKey.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-			btnChangeStartStopKey.Location = new Point(298, 42);
+			btnChangeStartStopKey.Location = new Point(291, 5);
 			btnChangeStartStopKey.Margin = new Padding(4, 3, 4, 3);
 			btnChangeStartStopKey.Name = "btnChangeStartStopKey";
-			btnChangeStartStopKey.Size = new Size(117, 28);
+			btnChangeStartStopKey.Size = new Size(112, 28);
 			btnChangeStartStopKey.TabIndex = 6;
 			btnChangeStartStopKey.Text = "_startStopKey";
 			btnChangeStartStopKey.UseVisualStyleBackColor = true;
 			btnChangeStartStopKey.Click += btnStartStopKey_Click;
 			btnChangeStartStopKey.KeyDown += btnStartStopKey_KeyDown;
 			// 
+			// lblStartStopKeyTip
+			// 
+			lblStartStopKeyTip.Anchor = AnchorStyles.None;
+			lblStartStopKeyTip.AutoSize = true;
+			lblStartStopKeyTip.Font = new Font("Bahnschrift", 11F);
+			lblStartStopKeyTip.ForeColor = SystemColors.ControlDarkDark;
+			lblStartStopKeyTip.Location = new Point(171, 31);
+			lblStartStopKeyTip.Margin = new Padding(4, 0, 4, 0);
+			lblStartStopKeyTip.Name = "lblStartStopKeyTip";
+			lblStartStopKeyTip.Size = new Size(221, 18);
+			lblStartStopKeyTip.TabIndex = 7;
+			lblStartStopKeyTip.Text = "Press the button again to cancel";
+			// 
 			// lblChangeStartStopKey
 			// 
 			lblChangeStartStopKey.Anchor = AnchorStyles.None;
 			lblChangeStartStopKey.AutoSize = true;
 			lblChangeStartStopKey.Font = new Font("Bahnschrift", 11.25F);
-			lblChangeStartStopKey.Location = new Point(162, 47);
+			lblChangeStartStopKey.Location = new Point(159, 10);
 			lblChangeStartStopKey.Margin = new Padding(4, 0, 4, 0);
 			lblChangeStartStopKey.Name = "lblChangeStartStopKey";
 			lblChangeStartStopKey.Size = new Size(124, 18);
 			lblChangeStartStopKey.TabIndex = 4;
 			lblChangeStartStopKey.Text = "Key to start/stop:";
+			// 
+			// pnlChangeSounds
+			// 
+			pnlChangeSounds.Controls.Add(btnSoundStopReset);
+			pnlChangeSounds.Controls.Add(btnSoundStartReset);
+			pnlChangeSounds.Controls.Add(btnSoundStop);
+			pnlChangeSounds.Controls.Add(lblSoundStart);
+			pnlChangeSounds.Controls.Add(btnSoundStart);
+			pnlChangeSounds.Controls.Add(lblSoundStop);
+			pnlChangeSounds.Dock = DockStyle.Fill;
+			pnlChangeSounds.Location = new Point(4, 67);
+			pnlChangeSounds.Name = "pnlChangeSounds";
+			pnlChangeSounds.Size = new Size(562, 56);
+			pnlChangeSounds.TabIndex = 9;
+			// 
+			// btnSoundStopReset
+			// 
+			btnSoundStopReset.Anchor = AnchorStyles.None;
+			btnSoundStopReset.AutoSize = true;
+			btnSoundStopReset.Cursor = Cursors.Hand;
+			btnSoundStopReset.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+			btnSoundStopReset.Location = new Point(363, 28);
+			btnSoundStopReset.Margin = new Padding(4, 3, 4, 3);
+			btnSoundStopReset.Name = "btnSoundStopReset";
+			btnSoundStopReset.Size = new Size(57, 28);
+			btnSoundStopReset.TabIndex = 12;
+			btnSoundStopReset.Tag = "stop";
+			btnSoundStopReset.Text = "Reset";
+			btnSoundStopReset.UseVisualStyleBackColor = true;
+			btnSoundStopReset.Click += ResetSounds_Click;
+			// 
+			// btnSoundStartReset
+			// 
+			btnSoundStartReset.Anchor = AnchorStyles.None;
+			btnSoundStartReset.AutoSize = true;
+			btnSoundStartReset.Cursor = Cursors.Hand;
+			btnSoundStartReset.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+			btnSoundStartReset.Location = new Point(363, 0);
+			btnSoundStartReset.Margin = new Padding(4, 3, 4, 3);
+			btnSoundStartReset.Name = "btnSoundStartReset";
+			btnSoundStartReset.Size = new Size(57, 28);
+			btnSoundStartReset.TabIndex = 11;
+			btnSoundStartReset.Tag = "start";
+			btnSoundStartReset.Text = "Reset";
+			btnSoundStartReset.UseVisualStyleBackColor = true;
+			btnSoundStartReset.Click += ResetSounds_Click;
+			// 
+			// btnSoundStop
+			// 
+			btnSoundStop.Anchor = AnchorStyles.None;
+			btnSoundStop.AutoEllipsis = true;
+			btnSoundStop.Cursor = Cursors.Hand;
+			btnSoundStop.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+			btnSoundStop.Location = new Point(241, 28);
+			btnSoundStop.Margin = new Padding(4, 3, 4, 3);
+			btnSoundStop.Name = "btnSoundStop";
+			btnSoundStop.Size = new Size(112, 28);
+			btnSoundStop.TabIndex = 10;
+			btnSoundStop.Tag = "stop";
+			btnSoundStop.Text = "default";
+			btnSoundStop.UseVisualStyleBackColor = true;
+			btnSoundStop.Click += ChangeSounds_Click;
+			// 
+			// lblSoundStart
+			// 
+			lblSoundStart.Anchor = AnchorStyles.None;
+			lblSoundStart.AutoSize = true;
+			lblSoundStart.Font = new Font("Bahnschrift", 11.25F);
+			lblSoundStart.Location = new Point(143, 5);
+			lblSoundStart.Margin = new Padding(4, 0, 4, 0);
+			lblSoundStart.Name = "lblSoundStart";
+			lblSoundStart.Size = new Size(88, 18);
+			lblSoundStart.TabIndex = 9;
+			lblSoundStart.Text = "Start sound:";
+			// 
+			// btnSoundStart
+			// 
+			btnSoundStart.Anchor = AnchorStyles.None;
+			btnSoundStart.AutoEllipsis = true;
+			btnSoundStart.Cursor = Cursors.Hand;
+			btnSoundStart.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+			btnSoundStart.Location = new Point(241, 0);
+			btnSoundStart.Margin = new Padding(4, 3, 4, 3);
+			btnSoundStart.Name = "btnSoundStart";
+			btnSoundStart.Size = new Size(112, 28);
+			btnSoundStart.TabIndex = 8;
+			btnSoundStart.Tag = "start";
+			btnSoundStart.Text = "default";
+			btnSoundStart.UseVisualStyleBackColor = true;
+			btnSoundStart.Click += ChangeSounds_Click;
+			// 
+			// lblSoundStop
+			// 
+			lblSoundStop.Anchor = AnchorStyles.None;
+			lblSoundStop.AutoSize = true;
+			lblSoundStop.Font = new Font("Bahnschrift", 11.25F);
+			lblSoundStop.Location = new Point(144, 32);
+			lblSoundStop.Margin = new Padding(4, 0, 4, 0);
+			lblSoundStop.Name = "lblSoundStop";
+			lblSoundStop.Size = new Size(85, 18);
+			lblSoundStop.TabIndex = 7;
+			lblSoundStop.Text = "Stop sound:";
 			// 
 			// Window
 			// 
@@ -452,7 +591,11 @@
 			tpMain.ResumeLayout(false);
 			tpMain.PerformLayout();
 			tpSettings.ResumeLayout(false);
-			tpSettings.PerformLayout();
+			tlpSettings.ResumeLayout(false);
+			pnlChangeStartStopKey.ResumeLayout(false);
+			pnlChangeStartStopKey.PerformLayout();
+			pnlChangeSounds.ResumeLayout(false);
+			pnlChangeSounds.PerformLayout();
 			ResumeLayout(false);
 
 		}
@@ -486,6 +629,15 @@
 		private Button btnChangeStartStopKey;
 		private Label lblChangeStartStopKey;
 		private Label lblStartStopKeyTip;
+		private TableLayoutPanel tlpSettings;
+		private Panel pnlChangeStartStopKey;
+		private Panel pnlChangeSounds;
+		private Button btnSoundStart;
+		private Label lblSoundStop;
+		private Button btnSoundStop;
+		private Label lblSoundStart;
+		private Button btnSoundStopReset;
+		private Button btnSoundStartReset;
 	}
 }
 

@@ -170,7 +170,7 @@ namespace AutoClicker
 			if (keyStatus < 0)
 			{
 				ChangeActiveState();
-				Thread.Sleep(200);		//prevent enabling/disabling multiple times in a short time
+				Thread.Sleep(200);      //prevent enabling/disabling multiple times in a short time
 			}
 		}
 
@@ -340,7 +340,7 @@ namespace AutoClicker
 				btnChangeStartStopKey.Text = "Press any key...";
 			}
 			else     //Cancel the changing and set it back to the current key
-			{	
+			{
 				SetStartStopKey(_startStopKey);
 			}
 		}
@@ -363,7 +363,7 @@ namespace AutoClicker
 		void tcWindow_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			TabPage currentTap = tcWindow.SelectedTab!;
-			
+
 			if (currentTap == tpMain)
 			{
 				tmrKeyDown.Start();
@@ -381,6 +381,16 @@ namespace AutoClicker
 					ChangeActiveState();
 				}
 			}
+		}
+
+		private void ChangeSounds_Click(object sender, EventArgs e)
+		{
+			//Use an openfiledialog to select a sound file (wav only) and set it as the new sound
+		}
+
+		private void ResetSounds_Click(object sender, EventArgs e)
+		{
+			//Reset one of the sounds with the default sounds that are in the sounds folder
 		}
 	}
 }
