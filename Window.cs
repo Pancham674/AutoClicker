@@ -76,8 +76,8 @@ namespace AutoClicker
 				btn5min
 			};
 
-			_sndOn = new SoundPlayer(Resources.Clicker_On);
-			_sndOff = new SoundPlayer(Resources.Clicker_Off);
+			_sndOn = new SoundPlayer(Settings.Default.SoundStart);
+			_sndOff = new SoundPlayer(Settings.Default.SoundStop);
 		}
 
 		void Window_Load(object sender, EventArgs e)
