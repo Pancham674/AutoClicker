@@ -49,7 +49,7 @@ namespace AutoClicker.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\Sounds\\Clicker_Off.wav")]
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\Sounds\\Clicker_On.wav")]
         public string SoundStart {
             get {
                 return ((string)(this["SoundStart"]));
@@ -61,7 +61,7 @@ namespace AutoClicker.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\Sounds\\Clicker_On.wav")]
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\Sounds\\Clicker_Off.wav")]
         public string SoundStop {
             get {
                 return ((string)(this["SoundStop"]));
