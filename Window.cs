@@ -78,11 +78,11 @@ namespace AutoClicker
 			};
 
 			_defaultStartSoundPath = Path.GetFullPath(@"..\..\..\Sounds\Clicker_On.wav");
-			_sndStart = new SoundPlayer(Settings.Default.SoundStart);
+			_sndStart = new SoundPlayer(Path.GetFullPath(Settings.Default.SoundStart));
 			_sndStart.LoadAsync();
 
 			_defaultStopSoundPath = Path.GetFullPath(@"..\..\..\Sounds\Clicker_Off.wav");
-			_sndStop = new SoundPlayer(Settings.Default.SoundStop);
+			_sndStop = new SoundPlayer(Path.GetFullPath(Settings.Default.SoundStop));
 			_sndStop.LoadAsync();
 		}
 
