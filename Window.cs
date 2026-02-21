@@ -102,8 +102,16 @@ namespace AutoClicker
 			btnSoundStartReset.Enabled = !_sndStart.SoundLocation.Equals(_defaultStartSoundPath);
 			btnSoundStopReset.Enabled = !_sndStop.SoundLocation.Equals(_defaultStopSoundPath);
 
-			btnSoundStart.Text = Path.GetFileName(_sndStart.SoundLocation);
-			btnSoundStop.Text = Path.GetFileName(_sndStop.SoundLocation);
+			ChangeSoundBtnText(btnSoundStart, Path.GetFileName(_sndStart.SoundLocation));
+			ChangeSoundBtnText(btnSoundStop, Path.GetFileName(_sndStop.SoundLocation));
+
+			ToolTip tp = new ToolTip()
+			{
+				AutomaticDelay = 2000
+			};
+
+			tp.SetToolTip(btnSoundStart, "Click this button to change the sound when starting the clicker");
+			tp.SetToolTip(btnSoundStop, "Click this button to change the sound when stopping the clicker");
 		}
 
 		/// <summary>
@@ -413,7 +421,7 @@ namespace AutoClicker
 		private void ChangeSounds_Click(object sender, EventArgs e)
 		{
 			Button senderBtn = (Button)sender;
-			
+
 			OpenFileDialog oFD = new OpenFileDialog()
 			{
 				Filter = "WAV files (*.wav)|*.wav",
@@ -456,7 +464,7 @@ namespace AutoClicker
 			mySoundPlayer.SoundLocation = myFilePath;
 			mySoundPlayer.LoadAsync();
 
-			mySoundButton.Text = Path.GetFileName(myFilePath);
+			ChangeSoundBtnText(mySoundButton, Path.GetFileName(myFilePath));
 			myResetButton.Enabled = !myFilePath.Equals(myDefaultSoundPath);
 		}
 
@@ -473,16 +481,21 @@ namespace AutoClicker
 			{
 				_sndStart.SoundLocation = _defaultStartSoundPath;
 				_sndStart.LoadAsync();
-				btnSoundStart.Text = Path.GetFileName(_sndStart.SoundLocation);
+				ChangeSoundBtnText(btnSoundStart, Path.GetFileName(_sndStart.SoundLocation));
 			}
 			else if (senderBtn.Tag!.Equals("stop"))
 			{
 				_sndStop.SoundLocation = _defaultStopSoundPath;
 				_sndStop.LoadAsync();
-				btnSoundStop.Text = Path.GetFileName(_sndStop.SoundLocation);
+				ChangeSoundBtnText(btnSoundStop, Path.GetFileName(_sndStop.SoundLocation));
 			}
 
 			senderBtn.Enabled = false;
+		}
+
+		void ChangeSoundBtnText(Button mySoundButton, string myText)
+		{
+			mySoundButton.Text = string.Concat(myText, "...");
 		}
 	}
 }
