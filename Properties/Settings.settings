@@ -8,5 +8,11 @@
     <Setting Name="ClickInterval" Type="System.Int32" Scope="User">
       <Value Profile="(Default)">60000</Value>
     </Setting>
+    <Setting Name="SoundStart" Type="System.String" Scope="User">
+      <Value Profile="(Default)">..\..\..\Sounds\Clicker_On.wav</Value>
+    </Setting>
+    <Setting Name="SoundStop" Type="System.String" Scope="User">
+      <Value Profile="(Default)">..\..\..\Sounds\Clicker_Off.wav</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

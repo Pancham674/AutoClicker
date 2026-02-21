@@ -46,5 +46,29 @@ namespace AutoClicker.Properties {
                 this["ClickInterval"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\Sounds\\Clicker_On.wav")]
+        public string SoundStart {
+            get {
+                return ((string)(this["SoundStart"]));
+            }
+            set {
+                this["SoundStart"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("..\\..\\..\\Sounds\\Clicker_Off.wav")]
+        public string SoundStop {
+            get {
+                return ((string)(this["SoundStop"]));
+            }
+            set {
+                this["SoundStop"] = value;
+            }
+        }
     }
 }
