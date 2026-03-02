@@ -61,9 +61,9 @@
 			pnlChangeSounds = new Panel();
 			btnSoundStopReset = new Button();
 			btnSoundStartReset = new Button();
-			btnSoundStop = new Button();
+			btnChangeSoundStop = new Button();
 			lblSoundStart = new Label();
-			btnSoundStart = new Button();
+			btnChangeSoundStart = new Button();
 			lblSoundStop = new Label();
 			((System.ComponentModel.ISupportInitialize)nudUserInterval).BeginInit();
 			pnlUserTimeFrame.SuspendLayout();
@@ -462,9 +462,9 @@
 			// 
 			pnlChangeSounds.Controls.Add(btnSoundStopReset);
 			pnlChangeSounds.Controls.Add(btnSoundStartReset);
-			pnlChangeSounds.Controls.Add(btnSoundStop);
+			pnlChangeSounds.Controls.Add(btnChangeSoundStop);
 			pnlChangeSounds.Controls.Add(lblSoundStart);
-			pnlChangeSounds.Controls.Add(btnSoundStart);
+			pnlChangeSounds.Controls.Add(btnChangeSoundStart);
 			pnlChangeSounds.Controls.Add(lblSoundStop);
 			pnlChangeSounds.Dock = DockStyle.Fill;
 			pnlChangeSounds.Location = new Point(4, 67);
@@ -486,7 +486,7 @@
 			btnSoundStopReset.Tag = "stop";
 			btnSoundStopReset.Text = "Reset";
 			btnSoundStopReset.UseVisualStyleBackColor = true;
-			btnSoundStopReset.Click += ResetSounds_Click;
+			btnSoundStopReset.Click += PrepareResetSound_Click;
 			// 
 			// btnSoundStartReset
 			// 
@@ -502,23 +502,23 @@
 			btnSoundStartReset.Tag = "start";
 			btnSoundStartReset.Text = "Reset";
 			btnSoundStartReset.UseVisualStyleBackColor = true;
-			btnSoundStartReset.Click += ResetSounds_Click;
+			btnSoundStartReset.Click += PrepareResetSound_Click;
 			// 
-			// btnSoundStop
+			// btnChangeSoundStop
 			// 
-			btnSoundStop.Anchor = AnchorStyles.None;
-			btnSoundStop.AutoEllipsis = true;
-			btnSoundStop.Cursor = Cursors.Hand;
-			btnSoundStop.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-			btnSoundStop.Location = new Point(239, 28);
-			btnSoundStop.Margin = new Padding(4, 3, 4, 3);
-			btnSoundStop.Name = "btnSoundStop";
-			btnSoundStop.Size = new Size(116, 28);
-			btnSoundStop.TabIndex = 10;
-			btnSoundStop.Tag = "stop";
-			btnSoundStop.Text = "default";
-			btnSoundStop.UseVisualStyleBackColor = true;
-			btnSoundStop.Click += ChangeSounds_Click;
+			btnChangeSoundStop.Anchor = AnchorStyles.None;
+			btnChangeSoundStop.AutoEllipsis = true;
+			btnChangeSoundStop.Cursor = Cursors.Hand;
+			btnChangeSoundStop.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+			btnChangeSoundStop.Location = new Point(239, 28);
+			btnChangeSoundStop.Margin = new Padding(4, 3, 4, 3);
+			btnChangeSoundStop.Name = "btnChangeSoundStop";
+			btnChangeSoundStop.Size = new Size(116, 28);
+			btnChangeSoundStop.TabIndex = 10;
+			btnChangeSoundStop.Tag = "stop";
+			btnChangeSoundStop.Text = "default";
+			btnChangeSoundStop.UseVisualStyleBackColor = true;
+			btnChangeSoundStop.Click += PrepareChangeSound_Click;
 			// 
 			// lblSoundStart
 			// 
@@ -532,21 +532,21 @@
 			lblSoundStart.TabIndex = 9;
 			lblSoundStart.Text = "Start sound:";
 			// 
-			// btnSoundStart
+			// btnChangeSoundStart
 			// 
-			btnSoundStart.Anchor = AnchorStyles.None;
-			btnSoundStart.AutoEllipsis = true;
-			btnSoundStart.Cursor = Cursors.Hand;
-			btnSoundStart.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
-			btnSoundStart.Location = new Point(239, 0);
-			btnSoundStart.Margin = new Padding(4, 3, 4, 3);
-			btnSoundStart.Name = "btnSoundStart";
-			btnSoundStart.Size = new Size(116, 28);
-			btnSoundStart.TabIndex = 8;
-			btnSoundStart.Tag = "start";
-			btnSoundStart.Text = "default";
-			btnSoundStart.UseVisualStyleBackColor = true;
-			btnSoundStart.Click += ChangeSounds_Click;
+			btnChangeSoundStart.Anchor = AnchorStyles.None;
+			btnChangeSoundStart.AutoEllipsis = true;
+			btnChangeSoundStart.Cursor = Cursors.Hand;
+			btnChangeSoundStart.Font = new Font("Bahnschrift", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+			btnChangeSoundStart.Location = new Point(239, 0);
+			btnChangeSoundStart.Margin = new Padding(4, 3, 4, 3);
+			btnChangeSoundStart.Name = "btnChangeSoundStart";
+			btnChangeSoundStart.Size = new Size(116, 28);
+			btnChangeSoundStart.TabIndex = 8;
+			btnChangeSoundStart.Tag = "start";
+			btnChangeSoundStart.Text = "default";
+			btnChangeSoundStart.UseVisualStyleBackColor = true;
+			btnChangeSoundStart.Click += PrepareChangeSound_Click;
 			// 
 			// lblSoundStop
 			// 
@@ -632,9 +632,9 @@
 		private TableLayoutPanel tlpSettings;
 		private Panel pnlChangeStartStopKey;
 		private Panel pnlChangeSounds;
-		private Button btnSoundStart;
+		private Button btnChangeSoundStart;
 		private Label lblSoundStop;
-		private Button btnSoundStop;
+		private Button btnChangeSoundStop;
 		private Label lblSoundStart;
 		private Button btnSoundStopReset;
 		private Button btnSoundStartReset;
