@@ -78,12 +78,16 @@ namespace AutoClicker
 			};
 
 			_defaultStartSoundPath = Path.GetFullPath(@"..\..\..\Sounds\Clicker_On.wav");
-			_sndStart = new SoundPlayer(Path.GetFullPath(Settings.Default.SoundStart));
-			_sndStart.LoadAsync();
+			InitSound(out _sndStart, Path.GetFullPath(Settings.Default.SoundStart), _defaultStartSoundPath);
 
 			_defaultStopSoundPath = Path.GetFullPath(@"..\..\..\Sounds\Clicker_Off.wav");
-			_sndStop = new SoundPlayer(Path.GetFullPath(Settings.Default.SoundStop));
-			_sndStop.LoadAsync();
+			InitSound(out _sndStop, Path.GetFullPath(Settings.Default.SoundStop), _defaultStopSoundPath);
+		}
+
+		void InitSound(out SoundPlayer mySound, string mySavedSoundPath, string myDefaultSoundPath)
+		{   //Init the SoundPlayer with the saved sound if it exists, otherwise use the default sound
+			mySound = new SoundPlayer(File.Exists(mySavedSoundPath) ? mySavedSoundPath : myDefaultSoundPath);
+			mySound.LoadAsync();
 		}
 
 		/// <summary>
