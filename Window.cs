@@ -98,20 +98,28 @@ namespace AutoClicker
 			cbTimeUnitToCalc.SelectedIndex = 0;
 			ChangeWindow();
 
-			//Enable these if current sound isn't the default
-			btnSoundStartReset.Enabled = !_sndStart.SoundLocation.Equals(_defaultStartSoundPath);
-			btnSoundStopReset.Enabled = !_sndStop.SoundLocation.Equals(_defaultStopSoundPath);
+			SetUpSoundControls(btnSoundStartReset, btnChangeSoundStart, _sndStart, _defaultStartSoundPath, "Click this button to change the sound when starting the clicker");
+			SetUpSoundControls(btnSoundStopReset, btnChangeSoundStop, _sndStop, _defaultStopSoundPath, "Click this button to change the sound when stopping the clicker");
+		}
 
-			ChangeSoundBtnText(btnChangeSoundStart, Path.GetFileName(_sndStart.SoundLocation));
-			ChangeSoundBtnText(btnChangeSoundStop, Path.GetFileName(_sndStop.SoundLocation));
-
+		/// <summary>
+		/// Will dis/enable the reset button for the selected sound file, change the ChangeSoundBtn text and add a tooltip to it.
+		/// </summary>
+		/// <param name="myResetSoundBtn"></param>
+		/// <param name="myChangeSoundBtn"></param>
+		/// <param name="mySound"></param>
+		/// <param name="myDefaultSoundPath"></param>
+		/// <param name="myToolTipText"></param>
+		void SetUpSoundControls(Button myResetSoundBtn, Button myChangeSoundBtn, SoundPlayer mySound, string myDefaultSoundPath, string myToolTipText)
+		{   //Enable reset button if current sound isn't the default
+			myResetSoundBtn.Enabled = !mySound.SoundLocation.Equals(myDefaultSoundPath);
+			ChangeSoundBtnText(myChangeSoundBtn, Path.GetFileName(mySound.SoundLocation));
+			
 			ToolTip tp = new ToolTip()
 			{
 				AutomaticDelay = 2000
 			};
-
-			tp.SetToolTip(btnChangeSoundStart, "Click this button to change the sound when starting the clicker");
-			tp.SetToolTip(btnChangeSoundStop, "Click this button to change the sound when stopping the clicker");
+			tp.SetToolTip(myChangeSoundBtn, myToolTipText);
 		}
 
 		/// <summary>
