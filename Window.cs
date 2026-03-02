@@ -1,5 +1,4 @@
 using AutoClicker.Properties;
-using System.Diagnostics;
 using System.Media;
 using System.Runtime.InteropServices;
 
@@ -30,8 +29,11 @@ namespace AutoClicker
 
 		#region Globals
 		//Sounds that are played when the clicker is started/stopped
-		SoundPlayer _sndOn;
-		SoundPlayer _sndOff;
+		SoundPlayer _sndStart;
+		SoundPlayer _sndStop;
+
+		readonly string _defaultStartSoundPath;
+		readonly string _defaultStopSoundPath;
 
 		bool _IsClickerActive;
 		bool _IsKeyBeingChanged;
@@ -44,7 +46,6 @@ namespace AutoClicker
 		Button[] _defaultTimeFramesBtn;
 
 		int _fullWidth;
-		int _holdClick;
 		int _intervalToUse;
 		#endregion
 
@@ -76,20 +77,53 @@ namespace AutoClicker
 				btn5min
 			};
 
-			_sndOn = new SoundPlayer(Resources.Clicker_On);
-			_sndOff = new SoundPlayer(Resources.Clicker_Off);
+			_defaultStartSoundPath = Path.GetFullPath(@"..\..\..\Sounds\Clicker_On.wav");
+			_sndStart = new SoundPlayer(Path.GetFullPath(Settings.Default.SoundStart));
+			_sndStart.LoadAsync();
+
+			_defaultStopSoundPath = Path.GetFullPath(@"..\..\..\Sounds\Clicker_Off.wav");
+			_sndStop = new SoundPlayer(Path.GetFullPath(Settings.Default.SoundStop));
+			_sndStop.LoadAsync();
 		}
 
+		/// <summary>
+		/// Setting up UI
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		void Window_Load(object sender, EventArgs e)
 		{
 			tmrKeyDown.Start();
 			nudUserInterval.Value = _intervalToUse;
 			cbTimeUnitToCalc.SelectedIndex = 0;
 			ChangeWindow();
+
+			SetUpSoundControls(btnSoundStartReset, btnChangeSoundStart, _sndStart, _defaultStartSoundPath, "Click this button to change the sound when starting the clicker");
+			SetUpSoundControls(btnSoundStopReset, btnChangeSoundStop, _sndStop, _defaultStopSoundPath, "Click this button to change the sound when stopping the clicker");
 		}
 
 		/// <summary>
-		/// Will save User data such as click interval and start/stop key
+		/// Will dis/enable the reset button for the selected sound file, change the ChangeSoundBtn text and add a tooltip to it.
+		/// </summary>
+		/// <param name="myResetSoundBtn"></param>
+		/// <param name="myChangeSoundBtn"></param>
+		/// <param name="mySound"></param>
+		/// <param name="myDefaultSoundPath"></param>
+		/// <param name="myToolTipText"></param>
+		void SetUpSoundControls(Button myResetSoundBtn, Button myChangeSoundBtn, SoundPlayer mySound, string myDefaultSoundPath, string myToolTipText)
+		{   //Enable reset button if current sound isn't the default
+			myResetSoundBtn.Enabled = !mySound.SoundLocation.Equals(myDefaultSoundPath);
+			ChangeSoundBtnText(myChangeSoundBtn, Path.GetFileName(mySound.SoundLocation));
+			
+			ToolTip tp = new ToolTip()
+			{
+				AutomaticDelay = 2000
+			};
+			tp.SetToolTip(myChangeSoundBtn, myToolTipText);
+		}
+
+		/// <summary>
+		/// Will save User data on exit
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -97,6 +131,8 @@ namespace AutoClicker
 		{
 			Settings.Default.StartStopKey = (int)_startStopKey;
 			Settings.Default.ClickInterval = _intervalToUse;
+			Settings.Default.SoundStart = _sndStart.SoundLocation;
+			Settings.Default.SoundStop = _sndStop.SoundLocation;
 			Settings.Default.Save();
 		}
 
@@ -118,13 +154,15 @@ namespace AutoClicker
 			{
 				btnStartStopClicker.Text = "Stop Autoclicker";
 				tmrClicker.Start();
-				_sndOn.Play();
+				_sndStop.Stop();
+				_sndStart.Play();
 			}
 			else
 			{
 				btnStartStopClicker.Text = "Start Autoclicker";
 				tmrClicker.Stop();
-				_sndOff.Play();
+				_sndStart.Stop();
+				_sndStop.Play();
 			}
 		}
 
@@ -170,7 +208,7 @@ namespace AutoClicker
 			if (keyStatus < 0)
 			{
 				ChangeActiveState();
-				Thread.Sleep(200);		//prevent enabling/disabling multiple times in a short time
+				Thread.Sleep(200);      //prevent enabling/disabling multiple times in a short time
 			}
 		}
 
@@ -340,7 +378,7 @@ namespace AutoClicker
 				btnChangeStartStopKey.Text = "Press any key...";
 			}
 			else     //Cancel the changing and set it back to the current key
-			{	
+			{
 				SetStartStopKey(_startStopKey);
 			}
 		}
@@ -363,7 +401,7 @@ namespace AutoClicker
 		void tcWindow_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			TabPage currentTap = tcWindow.SelectedTab!;
-			
+
 			if (currentTap == tpMain)
 			{
 				tmrKeyDown.Start();
@@ -381,6 +419,91 @@ namespace AutoClicker
 					ChangeActiveState();
 				}
 			}
+		}
+
+		/// <summary>
+		/// Prepares the OpenFileDialog for changing the selected sound file
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void PrepareChangeSound_Click(object sender, EventArgs e)
+		{
+			Button senderBtn = (Button)sender;
+
+			OpenFileDialog oFD = new OpenFileDialog()
+			{
+				Filter = "WAV files (*.wav)|*.wav",
+				Title = "Select a sound file",
+				InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.MyMusic)
+			};
+
+			if (senderBtn.Tag!.Equals("start"))
+			{
+				ChangeSound(oFD, btnSoundStartReset, btnChangeSoundStart, _sndStart, _defaultStartSoundPath);
+			}
+			else if (senderBtn.Tag!.Equals("stop"))
+			{
+				ChangeSound(oFD, btnSoundStopReset, btnChangeSoundStop, _sndStop, _defaultStopSoundPath);
+			}
+		}
+
+		/// <summary>
+		/// After selecting a valid file it'll change the sound file and updates all controls associated with it
+		/// </summary>
+		/// <param name="myOFD"></param>
+		/// <param name="mySoundResetBtn"></param>
+		/// <param name="myChangeSoundBtn"></param>
+		/// <param name="mySound"></param>
+		/// <param name="myDefaultSoundPath"></param>
+		void ChangeSound(OpenFileDialog myOFD, Button mySoundResetBtn, Button myChangeSoundBtn, SoundPlayer mySound, string myDefaultSoundPath)
+		{
+			//set initialdirectory to the current directory where the sound resides if its not default
+			if (mySoundResetBtn.Enabled)
+			{
+				myOFD.InitialDirectory = Path.GetDirectoryName(mySound.SoundLocation);
+			}
+
+			if (myOFD.ShowDialog() == DialogResult.OK)
+			{
+				mySound.SoundLocation = myOFD.FileName;
+				mySound.LoadAsync();
+
+				ChangeSoundBtnText(myChangeSoundBtn, Path.GetFileName(myOFD.FileName));
+				mySoundResetBtn.Enabled = !myOFD.FileName.Equals(myDefaultSoundPath); 
+			}
+		}
+
+		/// <summary>
+		/// Will reset one of the sounds back to the original and disable the reset button
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void PrepareResetSound_Click(object sender, EventArgs e)
+		{
+			Button senderBtn = (Button)sender;
+
+			if (senderBtn.Tag!.Equals("start"))
+			{
+				ResetSound(_sndStart, _defaultStartSoundPath, btnChangeSoundStart);
+			}
+			else if (senderBtn.Tag!.Equals("stop"))
+			{
+				ResetSound(_sndStop, _defaultStopSoundPath, btnChangeSoundStop);
+			}
+
+			senderBtn.Enabled = false;
+		}
+
+		void ResetSound(SoundPlayer mySound, string myDefaultSoundPath, Button myChangeSoundBtn)
+		{
+			mySound.SoundLocation = myDefaultSoundPath;
+			mySound.LoadAsync();
+			ChangeSoundBtnText(myChangeSoundBtn, Path.GetFileName(mySound.SoundLocation));
+		}
+
+		void ChangeSoundBtnText(Button myChangeSoundBtn, string myText)
+		{
+			myChangeSoundBtn.Text = string.Concat(myText, "...");
 		}
 	}
 }
